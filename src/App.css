@@ -566,15 +566,37 @@ h1, h2, h3, h4, h5, h6 {
   background-clip: text;
 }
 
-.hero-father-name {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--text-muted);
-  letter-spacing: 1px;
-  font-style: italic;
-  margin-top: -12px;
+.hero-father-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -10px;
   margin-bottom: 24px;
+  padding: 6px 18px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 30px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.hero-father-badge:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(139, 92, 246, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.15);
+}
+
+.father-name-highlight {
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-left: 4px;
 }
 
 .hero-typed {

@@ -72,8 +72,8 @@ export default function Hero({ theme }) {
         </div>
         <p className="hero-greeting mono">Hello, I'm</p>
         <h1 className="hero-name">Harikumar Patel</h1>
-        <div className="hero-father-name mono">
-          S/O Rajnikant Thakorbhai Patel
+        <div className="hero-father-badge">
+          <span>Son of <strong className="father-name-highlight">Rajnikant Thakorbhai Patel</strong></span>
         </div>
         <div className="hero-typed">
           <TypeAnimation
