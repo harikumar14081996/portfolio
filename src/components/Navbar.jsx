@@ -56,7 +56,12 @@ export default function Navbar({ theme, toggleTheme }) {
         {/* Logo with animated brackets */}
         <span className="navbar-logo" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           <span className="logo-bracket">{'<'}</span>
-          <span className="logo-text">HP</span>
+          <span className="logo-text">
+            <span>H</span>
+            <span className="logo-expand logo-expand-long">arikumar Rajnikant </span>
+            <span>P</span>
+            <span className="logo-expand">atel</span>
+          </span>
           <span className="logo-bracket">{' />'}</span>
         </span>
 
