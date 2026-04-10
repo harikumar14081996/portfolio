@@ -9,7 +9,7 @@ const reasons = [
   {
     icon: '📊',
     title: 'Quantified Impact, Not Just Code',
-    desc: 'Every project comes with measurable business outcomes — 40% fewer bugs, 25% faster pages, 95% client satisfaction, 50% fewer scheduling conflicts.',
+    desc: 'Every project comes with measurable business outcomes — 98% bug-free delivery, 25% faster pages, 95% client satisfaction, 50% fewer scheduling conflicts.',
   },
   {
     icon: '🏛️',

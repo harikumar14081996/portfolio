@@ -26,7 +26,7 @@ export default function About() {
           <p className="about-text reveal-item" style={{ marginTop: '16px' }}>
             With <span className="highlight">3+ years of professional experience</span> across enterprise web platforms,
             mobile apps, cloud infrastructure, and IoT systems, I've shipped production code that serves thousands of users,
-            cut page load times by <span className="highlight">25%</span>, reduced user-reported issues by <span className="highlight">40%</span>,
+            cut page load times by <span className="highlight">25%</span>, achieved a <span className="highlight">98% bug-free</span> deployment rate,
             and consistently hit <span className="highlight">95%+ client satisfaction</span> rates.
           </p>
           <p className="about-text reveal-item" style={{ marginTop: '16px' }}>
@@ -44,8 +44,8 @@ export default function About() {
         <div className="stats-grid">
           <StatCard end={3} suffix="+" label="Years Experience" />
           <StatCard end={95} suffix="%" label="Client Satisfaction" />
-          <StatCard end={40} suffix="%" label="Fewer Bugs" />
-          <StatCard end={5000} suffix="+" label="Users Served" />
+          <StatCard end={98} suffix="%" label="Bug-Free Code" />
+          <StatCard end={25000} suffix="+" label="Users Served" />
         </div>
       </div>
     </section>
