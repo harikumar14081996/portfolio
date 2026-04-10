@@ -69,11 +69,13 @@ export default function Contact() {
               <label htmlFor="inq-type">Project Type</label>
               <select id="inq-type" name="project_type" value={form.project_type} onChange={handleChange}>
                 <option value="">Select a type...</option>
+                <option value="Website Development">Website Development</option>
                 <option value="Mobile Application Development">Mobile Application Development</option>
                 <option value="Enterprise Web Platform">Enterprise Web Platform</option>
                 <option value="AI Engineering & Integration">AI Engineering & Integration</option>
                 <option value="Cloud Architecture / DevOps">Cloud Architecture / DevOps</option>
                 <option value="IoT & Hardware Systems">IoT & Hardware Systems</option>
+                <option value="Marketing">Marketing</option>
                 <option value="Technical Consulting">Technical Consulting</option>
                 <option value="Other">Other</option>
               </select>
