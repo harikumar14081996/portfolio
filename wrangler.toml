@@ -3,6 +3,11 @@ main = "worker/index.js"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 
+routes = [
+  { pattern = "harikumarpatel.com", custom_domain = true },
+  { pattern = "www.harikumarpatel.com", custom_domain = true }
+]
+
 [assets]
 directory = "./dist"
 
