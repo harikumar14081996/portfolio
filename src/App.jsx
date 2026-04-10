@@ -66,7 +66,7 @@ export default function App() {
       <FloatingEmail />
       <CookieConsent />
       <footer className="footer">
-        <p>© {new Date().getFullYear()} Harikumar Patel. Built with React & ❤️</p>
+        <p>© {new Date().getFullYear()} Harikumar Patel</p>
       </footer>
     </div>
   );
