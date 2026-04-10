@@ -44,3 +44,27 @@ CREATE TABLE IF NOT EXISTS inquiries (
 
 CREATE INDEX IF NOT EXISTS idx_inquiries_status ON inquiries(status);
 CREATE INDEX IF NOT EXISTS idx_inquiries_created ON inquiries(created_at);
+
+-- Client reviews table
+CREATE TABLE IF NOT EXISTS reviews (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  business_name TEXT,
+  rating INTEGER NOT NULL CHECK (rating >= 1 AND rating <= 5),
+  content TEXT NOT NULL,
+  status TEXT DEFAULT 'pending', -- 'pending', 'approved', 'hidden'
+  is_featured BOOLEAN DEFAULT 0,
+  created_at TEXT DEFAULT (datetime('now'))
+);
+
+CREATE INDEX IF NOT EXISTS idx_reviews_status ON reviews(status);
+CREATE INDEX IF NOT EXISTS idx_reviews_featured ON reviews(is_featured);
+CREATE INDEX IF NOT EXISTS idx_reviews_rating ON reviews(rating);
+
+-- Global configuration table (for social links, etc.)
+CREATE TABLE IF NOT EXISTS config (
+  key TEXT PRIMARY KEY,
+  value TEXT NOT NULL
+);
+
+

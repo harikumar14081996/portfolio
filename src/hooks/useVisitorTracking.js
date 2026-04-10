@@ -8,37 +8,49 @@ export function useVisitorTracking() {
   const trackedSections = useRef(new Set());
 
   useEffect(() => {
-    // Only track if user has explicitly consented
-    const consent = localStorage.getItem('analytics_consent');
-    if (consent !== 'accepted') return;
+    const startTracking = () => {
+      // Only track if user has explicitly consented
+      const consent = localStorage.getItem('analytics_consent');
+      if (consent !== 'accepted') return;
 
-    // Track initial page load
-    sendBeacon('page_load');
+      // Track initial page load
+      sendBeacon('page_load');
 
-    // Track section views via IntersectionObserver
-    const sectionIds = ['hero', 'about', 'tech', 'projects', 'journey', 'contact'];
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !trackedSections.current.has(entry.target.id)) {
-            trackedSections.current.add(entry.target.id);
-            sendBeacon(entry.target.id);
-          }
+      // Track section views via IntersectionObserver
+      const sectionIds = ['hero', 'about', 'tech', 'projects', 'journey', 'contact'];
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting && !trackedSections.current.has(entry.target.id)) {
+              trackedSections.current.add(entry.target.id);
+              sendBeacon(entry.target.id);
+            }
+          });
+        },
+        { threshold: 0.3 }
+      );
+
+      const timer = setTimeout(() => {
+        sectionIds.forEach((id) => {
+          const el = document.getElementById(id);
+          if (el) observer.observe(el);
         });
-      },
-      { threshold: 0.3 }
-    );
+      }, 1000);
 
-    const timer = setTimeout(() => {
-      sectionIds.forEach((id) => {
-        const el = document.getElementById(id);
-        if (el) observer.observe(el);
-      });
-    }, 1000);
+      return () => {
+        clearTimeout(timer);
+        observer.disconnect();
+      };
+    };
+
+    const cleanup = startTracking();
+
+    // Listen for consent change without reload
+    window.addEventListener('consent-updated', startTracking);
 
     return () => {
-      clearTimeout(timer);
-      observer.disconnect();
+      if (cleanup) cleanup();
+      window.removeEventListener('consent-updated', startTracking);
     };
   }, []);
 }

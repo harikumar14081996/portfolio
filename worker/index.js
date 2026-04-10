@@ -9,8 +9,11 @@
  *   GET  /api/visits              — List visits with filters (auth required)
  *   GET  /api/visits/stats        — Aggregated statistics (auth required)
  *   GET  /api/nearby              — Nearby businesses via Overpass API (auth required)
- *   GET  /api/inquiries           — List inquiries (auth required)
- *   PATCH /api/inquiries/:id      — Update inquiry status/notes (auth required)
+ *   GET  /api/reviews             — List approved reviews (public)
+ *   POST /api/reviews            — Submit a new review (public)
+ *   PATCH /api/reviews/:id        — Update review status/featured (auth required)
+ *   GET  /api/config/:key        — Get global config value (public for certain keys)
+ *   PATCH /api/config/:key       — Update global config value (auth required)
  */
 
 const CORS_HEADERS = {
@@ -105,6 +108,21 @@ export default {
           return await handleSubmitInquiry(request, env);
         }
 
+        // GET /api/reviews — List approved reviews (public)
+        if (path === '/api/reviews' && request.method === 'GET') {
+          return await handleGetPublicReviews(url, env);
+        }
+
+        // POST /api/reviews — Submit review (public)
+        if (path === '/api/reviews' && request.method === 'POST') {
+          return await handleSubmitReview(request, env);
+        }
+
+        // GET /api/config/social_links — Get public links
+        if (path === '/api/config/social_links' && request.method === 'GET') {
+          return await handleGetSocialLinks(env);
+        }
+
         // ─── Protected routes ───
         const authHeader = request.headers.get('Authorization');
         const token = authHeader?.replace('Bearer ', '');
@@ -136,6 +154,23 @@ export default {
         const inquiryMatch = path.match(/^\/api\/inquiries\/(\d+)$/);
         if (inquiryMatch && request.method === 'PATCH') {
           return await handleUpdateInquiry(inquiryMatch[1], request, env);
+        }
+
+        // GET /api/admin/reviews — List all reviews (admin)
+        if (path === '/api/admin/reviews' && request.method === 'GET') {
+          return await handleGetAdminReviews(url, env);
+        }
+
+        // PATCH /api/reviews/:id — Update review (admin)
+        const reviewMatch = path.match(/^\/api\/reviews\/(\d+)$/);
+        if (reviewMatch && request.method === 'PATCH') {
+          return await handleUpdateReview(reviewMatch[1], request, env);
+        }
+
+        // PATCH /api/config/:key — Update config (admin)
+        const configMatch = path.match(/^\/api\/config\/(.+)$/);
+        if (configMatch && request.method === 'PATCH') {
+          return await handleUpdateConfig(configMatch[1], request, env);
         }
 
         // PATCH /api/admin/password — Change password (admin)
@@ -446,4 +481,100 @@ async function handleChangePassword(request, env, user) {
     .bind(newHash, user.username).run();
 
   return json({ ok: true, message: 'Password changed successfully' });
+}
+// ─── Review Handlers ───
+
+async function handleGetPublicReviews(url, env) {
+  const sort = url.searchParams.get('sort') || 'newest';
+  const limit = Math.min(parseInt(url.searchParams.get('limit') || '50'), 100);
+
+  let query = 'SELECT id, name, business_name, rating, content, created_at FROM reviews WHERE status = "approved"';
+  
+  if (sort === 'rating') {
+    query += ' ORDER BY rating DESC, created_at DESC';
+  } else if (sort === 'relevant') {
+    query += ' ORDER BY is_featured DESC, created_at DESC';
+  } else {
+    query += ' ORDER BY created_at DESC';
+  }
+
+  query += ' LIMIT ?';
+  const { results } = await env.DB.prepare(query).bind(limit).all();
+  return json({ reviews: results });
+}
+
+async function handleSubmitReview(request, env) {
+  const body = await request.json().catch(() => ({}));
+  const { name, business_name, rating, content } = body;
+
+  if (!name || !rating || !content) {
+    return json({ error: 'Name, rating, and content are required' }, 400);
+  }
+
+  await env.DB.prepare(`
+    INSERT INTO reviews (name, business_name, rating, content)
+    VALUES (?, ?, ?, ?)
+  `).bind(
+    name.substring(0, 100),
+    (business_name || '').substring(0, 100),
+    Math.max(1, Math.min(5, parseInt(rating))),
+    content.substring(0, 2000)
+  ).run();
+
+  return json({ ok: true, message: 'Review submitted for moderation. Thank you!' });
+}
+
+async function handleGetAdminReviews(url, env) {
+  const status = url.searchParams.get('status');
+  const { results } = await env.DB.prepare(`
+    SELECT * FROM reviews 
+    ${status ? 'WHERE status = ?' : ''} 
+    ORDER BY created_at DESC
+  `).bind(...(status ? [status] : [])).all();
+
+  const counts = await env.DB.prepare('SELECT status, COUNT(*) as count FROM reviews GROUP BY status').all();
+  return json({ reviews: results, statusCounts: counts.results });
+}
+
+async function handleUpdateReview(id, request, env) {
+  const body = await request.json().catch(() => ({}));
+  const { status, is_featured } = body;
+
+  const updates = [];
+  const params = [];
+
+  if (status) { updates.push('status = ?'); params.push(status); }
+  if (is_featured !== undefined) { updates.push('is_featured = ?'); params.push(is_featured ? 1 : 0); }
+
+  if (updates.length === 0) return json({ error: 'Nothing to update' }, 400);
+
+  return json({ ok: true });
+}
+
+// ─── Config Handlers ───
+
+async function handleGetSocialLinks(env) {
+  const row = await env.DB.prepare('SELECT value FROM config WHERE key = "social_links"').first();
+  if (row) {
+    return json({ links: JSON.parse(row.value) });
+  }
+
+  // Default seed if not in DB
+  const defaultLinks = [
+    { platform: 'LinkedIn', url: 'https://linkedin.com/in/harikumar-patel', icon: '🔗', visible: true },
+    { platform: 'Instagram', url: 'https://instagram.com/harikumar.p', icon: '📸', visible: true },
+    { platform: 'GitHub', url: 'https://github.com/v-harikumar', icon: '💻', visible: true },
+    { platform: 'X', url: 'https://x.com', icon: '🐦', visible: false }
+  ];
+  return json({ links: defaultLinks });
+}
+
+async function handleUpdateConfig(key, request, env) {
+  const body = await request.json().catch(() => ({}));
+  const value = JSON.stringify(body.value);
+
+  await env.DB.prepare('INSERT OR REPLACE INTO config (key, value) VALUES (?, ?)')
+    .bind(key, value).run();
+
+  return json({ ok: true });
 }

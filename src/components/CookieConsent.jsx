@@ -16,8 +16,8 @@ export default function CookieConsent() {
   const handleAccept = () => {
     localStorage.setItem('analytics_consent', 'accepted');
     setVisible(false);
-    // Reload to activate tracking
-    window.location.reload();
+    // Custom event to signal consent change without reload
+    window.dispatchEvent(new CustomEvent('consent-updated'));
   };
 
   const handleDecline = () => {

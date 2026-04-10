@@ -1,19 +1,37 @@
+import React from 'react';
 import { useGsapReveal } from '../hooks/useGsapReveal';
-import { AIIcon, AutomationIcon, MarketingIcon } from './AnimatedIcons';
+import { 
+  AIIcon, 
+  AutomationIcon, 
+  MarketingIcon, 
+  FrontendIcon, 
+  BackendIcon, 
+  DatabaseIcon, 
+  MobileIcon, 
+  CloudIcon, 
+  LogicIcon, 
+  ResearchIcon, 
+  IntegrationsIcon 
+} from './AnimatedIcons';
 
 const techData = [
-  { icon: 'devicon-react-original colored', name: 'Institutional Foundations', desc: 'Custom enterprise platforms and institutional architectures.', span: false },
-  { icon: 'devicon-nodejs-plain colored', name: 'Backend Systems', desc: 'Managed APIs and robust server logic.', span: false },
-  { icon: 'devicon-postgresql-plain colored', name: 'Data Architecture', desc: 'Designing scalable and pure data solutions.', span: false },
-  { icon: 'devicon-flutter-plain colored', name: 'Universal Mobile Apps', desc: 'Single codebase for iOS and Android devices.', span: false },
-  { icon: '', name: 'Intelligence within Hardware', desc: 'Language Model Orchestration · MCP · RAG · LangGraph · Local Machine Learning', span: true, isAI: true },
-  { icon: '', name: 'The Future of Operations', desc: 'Streamlining business through n8n and OpenClaw automation workflows.', span: true, isAutomation: true },
-  { icon: 'devicon-swift-plain colored', name: 'Native Experience', desc: 'High performance SwiftUI applications for Apple devices.', span: false },
-  { icon: 'devicon-android-plain colored', name: 'Kotlin Ecosystem', desc: 'Specialized builds for the Android ecosystem.', span: false },
-  { icon: 'devicon-azure-plain colored', name: 'Cloud Sovereignty', desc: 'Azure and AWS enterprise grade deployments.', span: false },
-  { icon: 'devicon-typescript-plain colored', name: 'Type Safety', desc: 'Building robust and pure production systems.', span: false },
-  { icon: '', name: 'Market Excellence', desc: 'Search Engine Ready · Lead Generation · Digital Presence · Conversion Optimization', span: true, isMarketing: true },
+  { icon: <FrontendIcon />, name: 'Institutional Stewardship', desc: 'Managing and evolving existing digital ecosystems with surgical precision.', span: false },
+  { icon: <MarketingIcon />, name: 'Digital Presence Hub', desc: 'Social media orchestration and brand continuity across all platforms.', span: false },
+  { icon: <DatabaseIcon />, name: 'Vertical Industry Mastery', desc: 'Tailored systems for Motels, Hotels, and Restaurants—built for the hospitality core.', span: false },
+  
+  { icon: <AIIcon />, name: 'Agentic Sovereignty', desc: 'Multi-agent orchestration through LangGraph, AutoGen, and CrewAI loops.', span: true },
+  { icon: <IntegrationsIcon />, name: 'LLM Orchestration', desc: 'GPT-4o, Claude 3.5 Sonnet, and Gemini Pro tool-use and function calling patterns.', span: true },
+  { icon: <ResearchIcon />, name: 'Deep Research & Safety', desc: 'Model evaluation, AI safety benchmarking, and cognitive system performance.', span: true },
+  
+  { icon: <MobileIcon />, name: 'Native Experience', desc: 'High performance SwiftUI and Kotlin applications for Apple and Android.', span: false },
+  { icon: <CloudIcon />, name: 'Cloud Majesty', desc: 'Azure and AWS enterprise grade deployments with CD/CI orchestration.', span: false },
+  { icon: <LogicIcon />, name: 'Engineering Integrity', desc: 'TypeScript, Unit Testing, and Type-safe logic for production systems.', span: false },
+  
+  { icon: <AutomationIcon />, name: 'The Autonomy Engine', desc: 'Streamlining business through n8n and OpenClaw autonomous workflows.', span: true },
+  { icon: <BackendIcon />, name: 'Logic & Intelligence', desc: 'Managed APIs, Python model serving, and robust server logic.', span: false },
+  { icon: <BackendIcon />, name: 'System Scalability', desc: 'Microservices, Kubernetes, and high availability enterprise cores.', span: false },
 ];
+
 
 export default function Services() {
   const sectionRef = useGsapReveal();
@@ -29,15 +47,7 @@ export default function Services() {
       <div className="tech-bento">
         {techData.map((tech, i) => (
           <div key={i} className={`tech-card reveal-item ${tech.span ? 'span-2' : ''}`}>
-            {tech.isAI ? (
-              <AIIcon />
-            ) : tech.isMarketing ? (
-              <MarketingIcon />
-            ) : tech.isAutomation ? (
-              <AutomationIcon />
-            ) : (
-              <i className={tech.icon}></i>
-            )}
+            {tech.icon}
             <span className="tech-card-title">{tech.name}</span>
             <span className="tech-card-desc">{tech.desc}</span>
           </div>

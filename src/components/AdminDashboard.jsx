@@ -16,6 +16,12 @@ export default function AdminDashboard() {
   const [selectedVisit, setSelectedVisit] = useState(null);
   const [loading, setLoading] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [reviews, setReviews] = useState([]);
+  const [revCounts, setRevCounts] = useState([]);
+  const [revLoading, setRevLoading] = useState(false);
+  const [socialLinks, setSocialLinks] = useState([]);
+  const [socialLoading, setSocialLoading] = useState(false);
+  const [socialSaving, setSocialSaving] = useState(false);
 
 
 
@@ -65,14 +71,79 @@ export default function AdminDashboard() {
     setNearbyLoading(false);
   };
 
+  const fetchReviews = useCallback(async () => {
+    setRevLoading(true);
+    try {
+      const resp = await fetch('/api/admin/reviews', { headers });
+      if (resp.status === 401) { handleLogout(); return; }
+      const data = await resp.json();
+      setReviews(data.reviews || []);
+      setRevCounts(data.statusCounts || []);
+    } catch { /* silent */ }
+    setRevLoading(false);
+  }, [token]);
+
+  const updateReview = async (id, updates) => {
+    try {
+      const resp = await fetch(`/api/reviews/${id}`, {
+        method: 'PATCH',
+        headers: { ...headers, 'Content-Type': 'application/json' },
+        body: JSON.stringify(updates),
+      });
+      if (resp.ok) fetchReviews();
+    } catch { /* silent */ }
+  };
+
+  const createSampleReviews = async () => {
+    const samples = [
+      { name: "Julian V.", business: "Stellar Dynamics", rating: 5, content: "The level of engineering integrity here is something we haven't seen since the early days of X. Absolute perfection." },
+      { name: "Elena R.", business: "Quantum Leap AI", rating: 5, content: "Integrating GPT-4o was seamless. The agentic workflows actually think before they act. It's transformed our stack." },
+      { name: "Marcus Thorne", business: "Thorne Global", rating: 4, content: "The bento grid UI is breathtaking. Our clients finally feel like they're using a tool from the next decade." },
+      { name: "Sarah Chen", business: "Innovate Labs", rating: 5, content: "Custom SVG animations and deep research capabilities. This is exactly what the industry was missing." }
+    ];
+
+    for (const s of samples) {
+      await fetch('/api/reviews', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(s)
+      });
+    }
+    fetchReviews();
+  };
+
+  const fetchSocialConfig = useCallback(async () => {
+    setSocialLoading(true);
+    try {
+      const resp = await fetch('/api/config/social_links', { headers });
+      const data = await resp.json();
+      setSocialLinks(data.links || []);
+    } catch { /* silent */ }
+    setSocialLoading(false);
+  }, [token]);
+
+  const saveSocialConfig = async () => {
+    setSocialSaving(true);
+    try {
+      await fetch('/api/config/social_links', {
+        method: 'PATCH',
+        headers: { ...headers, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ value: socialLinks }),
+      });
+    } catch { /* silent */ }
+    setSocialSaving(false);
+  };
+
 
 
   useEffect(() => {
     if (token) {
       fetchStats();
       fetchVisits();
+      fetchReviews();
+      fetchSocialConfig();
     }
-  }, [token, fetchStats, fetchVisits]);
+  }, [token, fetchStats, fetchVisits, fetchReviews, fetchSocialConfig]);
 
   const handleLogout = () => {
     sessionStorage.removeItem('analytics_token');
@@ -126,6 +197,19 @@ export default function AdminDashboard() {
             📈 <span>Analytics</span>
           </button>
 
+          <button 
+            className={`admin-sidebar-btn ${activeTab === 'reviews' ? 'active' : ''}`} 
+            onClick={() => switchTab('reviews')}
+          >
+            ⭐ <span>Reviews</span>
+          </button>
+
+          <button 
+            className={`admin-sidebar-btn ${activeTab === 'social' ? 'active' : ''}`} 
+            onClick={() => switchTab('social')}
+          >
+            🔗 <span>Social</span>
+          </button>
 
           <button 
             className={`admin-sidebar-btn ${activeTab === 'settings' ? 'active' : ''}`} 
@@ -152,6 +236,25 @@ export default function AdminDashboard() {
             <>
               <h2>Analytics Overview</h2>
               <p>Real-time insights on your portfolio visitors and engagement.</p>
+            </>
+          )}
+
+          {activeTab === 'reviews' && (
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+              <div>
+                <h2>Manage Reviews</h2>
+                <p>Curate the social proof displayed on your home page.</p>
+              </div>
+              <button className="admin-btn" onClick={createSampleReviews}>
+                ✦ Seed Masterpiece Reviews
+              </button>
+            </div>
+          )}
+
+          {activeTab === 'social' && (
+            <>
+              <h2>Social Orchestration</h2>
+              <p>Manage your public links and digital presence across the web.</p>
             </>
           )}
 
@@ -404,6 +507,130 @@ export default function AdminDashboard() {
       )}
 
 
+
+      {/* ─── Reviews Tab ─── */}
+      {activeTab === 'reviews' && (
+        <div className="admin-content" style={{ marginTop: '24px' }}>
+          <div className="admin-glass-card admin-table-wrapper">
+            <h3 style={{ fontSize: '0.9rem', marginBottom: '16px', color: 'var(--text-muted)' }}>
+              CLIENT FEEDBACK {revLoading && '⏳'}
+            </h3>
+            <table className="admin-table">
+              <thead>
+                <tr>
+                  <th>Client</th>
+                  <th>Business</th>
+                  <th>Rating</th>
+                  <th>Content</th>
+                  <th>Status</th>
+                  <th>Featured</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {reviews.map((r) => (
+                  <tr key={r.id}>
+                    <td><strong>{r.name}</strong></td>
+                    <td>{r.business_name || '—'}</td>
+                    <td style={{ color: 'var(--accent-primary)' }}>{'✦'.repeat(r.rating)}</td>
+                    <td style={{ maxWidth: '300px', fontSize: '0.85rem' }}>{r.content}</td>
+                    <td>
+                      <span className={`status-pill ${r.status}`}>
+                        {r.status}
+                      </span>
+                    </td>
+                    <td>{r.is_featured ? '⭐ Yes' : '—'}</td>
+                    <td>
+                      <div className="admin-actions">
+                        {r.status === 'pending' && (
+                          <button className="action-btn approve" onClick={() => updateReview(r.id, { status: 'approved' })}>Approve</button>
+                        )}
+                        {r.status === 'approved' && (
+                          <button className="action-btn hide" onClick={() => updateReview(r.id, { status: 'hidden' })}>Hide</button>
+                        )}
+                        {r.status === 'hidden' && (
+                          <button className="action-btn approve" onClick={() => updateReview(r.id, { status: 'approved' })}>Unhide</button>
+                        )}
+                        <button className="action-btn feature" onClick={() => updateReview(r.id, { is_featured: !r.is_featured })}>
+                          {r.is_featured ? 'Unfeature' : 'Feature'}
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+                {reviews.length === 0 && !revLoading && (
+                  <tr><td colSpan={7} className="admin-muted" style={{ textAlign: 'center', padding: '40px' }}>No reviews yet. Seed some to begin.</td></tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {/* ─── Social Tab ─── */}
+      {activeTab === 'social' && (
+        <div className="admin-content" style={{ marginTop: '24px' }}>
+          <div className="admin-glass-card">
+            <h3 style={{ fontSize: '0.9rem', marginBottom: '24px', color: 'var(--text-muted)' }}>
+              DYNAMIC SOCIAL LINKS {socialLoading && '⏳'}
+            </h3>
+            
+            <div className="social-manage-grid">
+              {socialLinks.map((link, idx) => (
+                <div key={idx} className="social-manage-item">
+                  <div className="social-manage-header">
+                    <span className="platform-tag">{link.platform}</span>
+                    <label className="switch">
+                      <input 
+                        type="checkbox" 
+                        checked={link.visible} 
+                        onChange={(e) => {
+                          const newLinks = [...socialLinks];
+                          newLinks[idx].visible = e.target.checked;
+                          setSocialLinks(newLinks);
+                        }}
+                      />
+                      <span className="slider-toggle round"></span>
+                    </label>
+                  </div>
+                  <div className="form-group">
+                    <label>Platform Icon (Emoji)</label>
+                    <input 
+                      type="text" 
+                      value={link.icon} 
+                      onChange={(e) => {
+                        const newLinks = [...socialLinks];
+                        newLinks[idx].icon = e.target.value;
+                        setSocialLinks(newLinks);
+                      }}
+                      className="admin-input"
+                    />
+                  </div>
+                  <div className="form-group" style={{ marginTop: '12px' }}>
+                    <label>URL</label>
+                    <input 
+                      type="text" 
+                      value={link.url} 
+                      onChange={(e) => {
+                        const newLinks = [...socialLinks];
+                        newLinks[idx].url = e.target.value;
+                        setSocialLinks(newLinks);
+                      }}
+                      className="admin-input"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="admin-footer-actions" style={{ marginTop: '32px', borderTop: '1px solid var(--border)', paddingTop: '24px' }}>
+              <button className="admin-btn" onClick={saveSocialConfig} disabled={socialSaving}>
+                {socialSaving ? 'Saving...' : '✦ Save Social Strategy'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ─── Settings Tab ─── */}
       {activeTab === 'settings' && (

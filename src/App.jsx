@@ -12,28 +12,39 @@ import Contact from './components/Contact';
 import OneMoreThing from './components/OneMoreThing';
 import FloatingEmail from './components/FloatingEmail';
 import CookieConsent from './components/CookieConsent';
-import AdminDashboard from './components/AdminDashboard';
-import { useVisitorTracking } from './hooks/useVisitorTracking';
+import ReviewSection from './components/ReviewSection';
+import ReviewPage from './components/ReviewPage';
 
 export default function App() {
   const [theme, setTheme] = useState('dark');
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isReviewPage, setIsReviewPage] = useState(false);
+  const [socialLinks, setSocialLinks] = useState([]);
 
   // Track visitors (only runs if user consented)
   useVisitorTracking();
 
   useEffect(() => {
+    // Fetch social links
+    fetch('/api/config/social_links')
+      .then(r => r.json())
+      .then(data => setSocialLinks(data.links || []))
+      .catch(() => {});
+
     const saved = localStorage.getItem('portfolio-theme');
     if (saved) {
       setTheme(saved);
       document.documentElement.setAttribute('data-theme', saved);
     }
-
-    // Check if on admin route
-    const checkAdmin = () => setIsAdmin(window.location.hash === '#/admin');
-    checkAdmin();
-    window.addEventListener('hashchange', checkAdmin);
-    return () => window.removeEventListener('hashchange', checkAdmin);
+    
+    // Check if on admin or review route
+    const checkRoute = () => {
+      setIsAdmin(window.location.hash === '#/admin');
+      setIsReviewPage(window.location.hash === '#/review');
+    };
+    checkRoute();
+    window.addEventListener('hashchange', checkRoute);
+    return () => window.removeEventListener('hashchange', checkRoute);
   }, []);
 
   const toggleTheme = () => {
@@ -43,7 +54,7 @@ export default function App() {
     localStorage.setItem('portfolio-theme', next);
   };
 
-  // Admin route — only accessible by manually typing #/admin
+  // Admin route
   if (isAdmin) {
     return (
       <div className="app" data-theme="dark">
@@ -52,13 +63,23 @@ export default function App() {
     );
   }
 
-  // Default: Portfolio (no admin link visible anywhere)
+  // Review submission page (Keynote style)
+  if (isReviewPage) {
+    return (
+      <div className="app">
+        <ReviewPage />
+      </div>
+    );
+  }
+
+  // Default: Portfolio
   return (
     <div className="app">
       <Navbar theme={theme} toggleTheme={toggleTheme} />
       <Hero theme={theme} />
       <About />
       <Services />
+      <ReviewSection />
       <Projects />
       <AcademicProjects />
       <Timeline />
@@ -68,8 +89,17 @@ export default function App() {
       <FloatingEmail />
       <CookieConsent />
       <footer className="footer">
-        <p>© {new Date().getFullYear()} Harikumar Patel</p>
+        <div className="footer-social">
+          {socialLinks.filter(l => l.visible).map((link, i) => (
+            <a key={i} href={link.url} target="_blank" rel="noopener noreferrer" className="social-link-pill">
+              <span className="social-icon">{link.icon}</span>
+              <span className="social-platform">{link.platform}</span>
+            </a>
+          ))}
+        </div>
+        <p className="footer-copyright">© {new Date().getFullYear()} Harikumar Patel</p>
       </footer>
     </div>
   );
 }
+
