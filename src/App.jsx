@@ -9,6 +9,7 @@ import AcademicProjects from './components/AcademicProjects';
 import Timeline from './components/Timeline';
 import WhyMe from './components/WhyMe';
 import Contact from './components/Contact';
+import OneMoreThing from './components/OneMoreThing';
 import FloatingEmail from './components/FloatingEmail';
 import CookieConsent from './components/CookieConsent';
 import AdminDashboard from './components/AdminDashboard';
@@ -63,6 +64,7 @@ export default function App() {
       <Timeline />
       <WhyMe />
       <Contact />
+      <OneMoreThing />
       <FloatingEmail />
       <CookieConsent />
       <footer className="footer">

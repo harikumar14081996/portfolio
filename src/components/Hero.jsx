@@ -10,6 +10,7 @@ export default function Hero({ theme }) {
   const heroRef = useRef(null);
   const [particlesReady, setParticlesReady] = useState(false);
   const [isImageOpen, setIsImageOpen] = useState(false);
+  const contentRef = useRef(null);
 
   useEffect(() => {
     initParticlesEngine(async (engine) => {
@@ -18,15 +19,35 @@ export default function Hero({ theme }) {
   }, []);
 
   useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (!contentRef.current) return;
+      const { clientX, clientY } = e;
+      const xPos = (clientX / window.innerWidth - 0.5) * 20;
+      const yPos = (clientY / window.innerHeight - 0.5) * 20;
+      
+      gsap.to(contentRef.current, {
+        x: xPos,
+        y: yPos,
+        duration: 1.2,
+        ease: 'power3.out'
+      });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  useEffect(() => {
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ delay: 0.3 });
-      tl.from('.hero-photo-wrapper', { scale: 0, opacity: 0, duration: 0.8, ease: 'back.out(1.7)' })
-        .from('.hero-greeting', { opacity: 0, y: 20, duration: 0.5 }, '-=0.3')
-        .from('.hero-name', { opacity: 0, y: 30, duration: 0.6 }, '-=0.2')
-        .from('.hero-typed', { opacity: 0, y: 20, duration: 0.5 }, '-=0.2')
-        .from('.hero-desc', { opacity: 0, y: 20, duration: 0.5 }, '-=0.2')
-        .from('.hero-buttons', { opacity: 0, y: 20, duration: 0.5 }, '-=0.2')
-        .from('.scroll-indicator', { opacity: 0, duration: 0.5 }, '-=0.2');
+      const tl = gsap.timeline({ delay: 0.2 });
+      tl.from('.hero-photo-wrapper', { scale: 0.8, opacity: 0, duration: 1.2, ease: 'power4.out' })
+        .from('.hero-greeting', { opacity: 0, y: 15, duration: 0.6 }, '-=0.8')
+        .from('.hero-name', { opacity: 0, y: 30, duration: 0.8, ease: 'power4.out' }, '-=0.6')
+        .from('.hero-father-badge', { opacity: 0, scale: 0.9, duration: 0.8 }, '-=0.5')
+        .from('.hero-typed', { opacity: 0, y: 15, duration: 0.6 }, '-=0.4')
+        .from('.hero-desc', { opacity: 0, y: 15, duration: 0.6 }, '-=0.4')
+        .from('.hero-buttons', { opacity: 0, scale: 0.95, duration: 0.8 }, '-=0.4')
+        .from('.scroll-indicator', { opacity: 0, duration: 1 }, '-=0.2');
     }, heroRef);
 
     return () => ctx.revert();
@@ -41,12 +62,12 @@ export default function Hero({ theme }) {
     fpsLimit: 60,
     particles: {
       color: { value: particleColor },
-      links: { color: particleLineColor, distance: 150, enable: true, opacity: 0.5, width: 1 },
-      move: { enable: true, speed: 1.2, direction: 'none', outModes: { default: 'bounce' } },
-      number: { value: 60, density: { enable: true, area: 800 } },
-      opacity: { value: 0.5 },
+      links: { color: particleLineColor, distance: 150, enable: true, opacity: 0.4, width: 1 },
+      move: { enable: true, speed: 0.8, direction: 'none', outModes: { default: 'bounce' } },
+      number: { value: 50, density: { enable: true, area: 800 } },
+      opacity: { value: 0.3 },
       shape: { type: 'circle' },
-      size: { value: { min: 1, max: 3 } },
+      size: { value: { min: 1, max: 2 } },
     },
     interactivity: {
       events: {
@@ -54,7 +75,7 @@ export default function Hero({ theme }) {
         resize: true,
       },
       modes: {
-        grab: { distance: 180, links: { opacity: 0.8 } },
+        grab: { distance: 200, links: { opacity: 0.5 } },
       },
     },
     detectRetina: true,
@@ -65,12 +86,12 @@ export default function Hero({ theme }) {
       {particlesReady && (
         <Particles id="hero-particles" className="hero-particles" options={particlesOptions} />
       )}
-      <div className="hero-content">
+      <div className="hero-content" ref={contentRef}>
         <div className="hero-photo-wrapper" onClick={() => setIsImageOpen(true)} style={{ cursor: 'pointer' }}>
           <img src="/Hari.jpg" alt="Harikumar Patel at Google DevFest" className="hero-photo" />
           <div className="hero-photo-hint">Click to view</div>
         </div>
-        <p className="hero-greeting mono">Hello, I'm</p>
+        <p className="hero-greeting mono">Hello, I am</p>
         <h1 className="hero-name">Harikumar Patel</h1>
         <div className="hero-father-badge">
           <span>Son of <strong className="father-name-highlight">Rajnikant Thakorbhai Patel</strong></span>
@@ -78,9 +99,9 @@ export default function Hero({ theme }) {
         <div className="hero-typed">
           <TypeAnimation
             sequence={[
-              'Architecting High-ROI Web Platforms', 2000,
-              'Engineering Intelligent Mobile Apps', 2000,
-              'Scaling Cloud & Enterprise Systems', 2000,
+              'Designing the Future of Web', 2000,
+              'Engineering Intelligence within Every Device', 2000,
+              'Creating Software that just Works', 2000,
             ]}
             wrapper="span"
             speed={50}
@@ -88,7 +109,7 @@ export default function Hero({ theme }) {
           />
         </div>
         <p className="hero-desc">
-          I am a Full-Stack & Mobile Engineer who builds production-grade software. From scalable cloud infrastructures to on-device AI, I help technical teams and businesses ship robust products that users love.
+          I believe in the intersection of technology and liberal arts. I build production grade software that feels as good as it looks. From vast cloud systems to intelligent local agents, I help visionary teams ship results that define their category.
         </p>
         <div className="hero-buttons">
           <MagneticButton href="#projects" variant="primary">

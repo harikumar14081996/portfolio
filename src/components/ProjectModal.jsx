@@ -9,11 +9,16 @@ export default function ProjectModal({ project, onClose }) {
     document.body.style.overflow = 'hidden';
 
     const ctx = gsap.context(() => {
-      gsap.from(overlayRef.current, { opacity: 0, duration: 0.3 });
+      gsap.from(overlayRef.current, { opacity: 0, duration: 0.5 });
       const tl = gsap.timeline();
-      tl.from(contentRef.current, { scale: 0.9, opacity: 0, y: 40, duration: 0.5, ease: 'power3.out' })
-        .from('.modal-header', { opacity: 0, y: 20, duration: 0.4 }, '-=0.2')
-        .from('.modal-section', { opacity: 0, y: 20, duration: 0.4, stagger: 0.1 }, '-=0.2');
+      tl.from(contentRef.current, { 
+        scale: 0.95, 
+        opacity: 0, 
+        duration: 0.8, 
+        ease: 'expo.out' 
+      })
+      .from('.modal-header', { opacity: 0, y: 15, duration: 0.5 }, '-=0.5')
+      .from('.modal-section', { opacity: 0, y: 15, duration: 0.5, stagger: 0.1 }, '-=0.3');
     });
 
     const handleEscape = (e) => { if (e.key === 'Escape') onClose(); };

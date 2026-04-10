@@ -3,33 +3,33 @@ import { useGsapReveal } from '../hooks/useGsapReveal';
 const reasons = [
   {
     icon: '🔧',
-    title: 'True Full-Stack + Mobile + IoT',
-    desc: "Most developers specialize in one layer. I've shipped production code across frontend, backend, mobile (iOS/Android), cloud, and IoT — and I've led teams doing it.",
+    title: 'Pure Full Stack Expertise',
+    desc: "Most developers stay in one layer. I bridge the gap between human experience and digital architecture. I have shipped production code across every surface from mobile to cloud.",
   },
   {
     icon: '📊',
-    title: 'Quantified Impact, Not Just Code',
-    desc: 'Every project comes with measurable business outcomes — 98% bug-free delivery, 25% faster pages, 95% client satisfaction, 50% fewer scheduling conflicts.',
+    title: 'Results You Can Measure',
+    desc: 'Every project comes with success you can feel. Flawless delivery and ninety eight percent bug free rates. I do not just ship code. I ship success.',
   },
   {
     icon: '🏛️',
-    title: 'Enterprise-Grade Architecture',
-    desc: "I don't build MVPs that fall apart at scale. I use battle-tested patterns — Repository, MVVM, RBAC, Three-Tier — that grow with your business.",
+    title: 'Enterprise Grade Architecture',
+    desc: "I do not build fragile prototypes. I use proven patterns like Repository and MVVM. I build systems that are designed to grow with your ambition.",
   },
   {
     icon: '🌍',
-    title: 'Canadian + International',
-    desc: 'Educated in Canada (Conestoga College) with hands-on professional experience from India\'s fast-paced software industry. Global perspective, local professionalism.',
+    title: 'A Global Perspective',
+    desc: 'Educated in Canada with deep professional roots in the fast world of international software. I bring global standards to every local partnership.',
   },
   {
     icon: '🤖',
-    title: 'AI & Cutting-Edge Tech',
-    desc: 'From on-device agentic AI and LLMs to IoT sensor networks and MCP integration, I actively push into the technologies defining the next decade.',
+    title: 'The Edge of Innovation',
+    desc: 'From local intelligence engines to the systems defining the next decade. I stay ahead of the curve so your business does too.',
   },
   {
     icon: '🔄',
-    title: 'Agile to the Core',
-    desc: "Scrum, Kanban, sprint planning, CI/CD — I don't just claim agile, I've lived it across two professional companies and delivered 20% productivity gains.",
+    title: 'Agile by Nature',
+    desc: "Planning and execution managed with precision. I have lived the agile philosophy across global companies and delivered vast gains in productivity.",
   },
 ];
 
@@ -38,10 +38,10 @@ export default function WhyMe() {
 
   return (
     <section className="section" id="whyme" ref={sectionRef}>
-      <div className="section-label reveal-item">What Sets Me Apart</div>
-      <h2 className="section-title reveal-item">Why Work With Me</h2>
-      <p className="section-subtitle reveal-item">
-        Six concrete reasons why I'm the right engineer for your next project.
+      <div className="section-label reveal-item" style={{ justifyContent: 'center' }}>The Harikumar Difference</div>
+      <h2 className="section-title reveal-item" style={{ textAlign: 'center' }}>Why Work With Me</h2>
+      <p className="section-subtitle reveal-item" style={{ textAlign: 'center', margin: '0 auto 40px' }}>
+        Six reasons why I am the right partner for your visionary goals.
       </p>
       <div className="whyme-grid">
         {reasons.map((reason, i) => (

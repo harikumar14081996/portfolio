@@ -39,20 +39,19 @@ export default function Contact() {
 
   return (
     <section className="contact section" id="contact" ref={sectionRef}>
-      <div className="section-label reveal-item" style={{ justifyContent: 'center' }}>Let's Connect</div>
+      <div className="section-label reveal-item" style={{ justifyContent: 'center' }}>Let us Connect</div>
       <h2 className="section-title reveal-item" style={{ textAlign: 'center' }}>
-        Ready to Build Something Exceptional?
+        Are you ready to build the future?
       </h2>
       <p className="section-subtitle reveal-item" style={{ textAlign: 'center', margin: '0 auto 40px' }}>
-        Ready to scale your business or institution? Whether you need a high-performance web platform, 
-        intelligent mobile automation, or a complete digital strategy—I deliver robust, 
-        production-grade results within 24 hours.
+        Are you ready to scale your business or institution? Whether you need a perfectly tuned web platform or 
+        intelligent mobile automation, I deliver robust and production scale results.
       </p>
 
       <div className="contact-layout">
         {/* Inquiry Form */}
         <form className="inquiry-form reveal-item" onSubmit={handleSubmit}>
-          <h3>📩 Start a Project</h3>
+          <h3>📩 Start a Partnership</h3>
 
           <div className="form-row">
             <div className="form-group">
@@ -67,27 +66,27 @@ export default function Contact() {
 
           <div className="form-row">
             <div className="form-group">
-              <label htmlFor="inq-type">Project Type</label>
+              <label htmlFor="inq-type">Nature of Project</label>
               <select id="inq-type" name="project_type" value={form.project_type} onChange={handleChange}>
                 <option value="">Select a type...</option>
-                <option value="Institutional / Enterprise Website">Institutional / Enterprise Website</option>
-                <option value="Mobile App Development (iOS/Android)">Mobile App Development (Swift/Flutter)</option>
-                <option value="Business Automation (n8n / OpenClaw)">Business Automation (n8n / OpenClaw)</option>
-                <option value="AI Agent & LLM Integration">AI Agent & LLM Integration</option>
-                <option value="Social Media & Digital Management">Social Media & Digital Management</option>
-                <option value="Technical Consulting / Code Audit">Technical Consulting / Code Audit</option>
-                <option value="Full-Stack Freelance Contract">Full-Stack Freelance Contract</option>
+                <option value="Institutional and Enterprise Foundation">Institutional and Enterprise Foundation</option>
+                <option value="Universal Mobile Application">Universal Mobile Application</option>
+                <option value="The Future of Business Automation">The Future of Business Automation</option>
+                <option value="Intelligence and Language Model Integration">Intelligence and Language Model Integration</option>
+                <option value="Digital Presence and Strategy">Digital Presence and Strategy</option>
+                <option value="Technical Consulting and Code Audits">Technical Consulting and Code Audits</option>
+                <option value="Full Stack Partnership">Full Stack Partnership</option>
                 <option value="Other">Other</option>
               </select>
             </div>
             <div className="form-group">
-              <label htmlFor="inq-budget">Budget Range</label>
+              <label htmlFor="inq-budget">Project Investment</label>
               <select id="inq-budget" name="budget" value={form.budget} onChange={handleChange}>
-                <option value="">Select budget...</option>
-                <option value="< $5K">Less than $5K</option>
-                <option value="$5K - $15K">$5K - $15K</option>
-                <option value="$15K - $50K">$15K - $50K</option>
-                <option value="$50K+">$50K+</option>
+                <option value="">Select range...</option>
+                <option value="Under $5000">Under $5000</option>
+                <option value="$5000 to $15000">$5000 to $15000</option>
+                <option value="$15000 to $50000">$15000 to $50000</option>
+                <option value="Over $50000">Over $50000</option>
                 <option value="Not sure">Not sure yet</option>
               </select>
             </div>

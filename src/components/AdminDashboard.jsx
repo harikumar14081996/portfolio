@@ -15,6 +15,7 @@ export default function AdminDashboard() {
   const [nearbyLoading, setNearbyLoading] = useState(false);
   const [selectedVisit, setSelectedVisit] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Inquiries state
   const [inquiries, setInquiries] = useState([]);
@@ -112,38 +113,58 @@ export default function AdminDashboard() {
     }
   };
 
+  const switchTab = (tab) => {
+    setActiveTab(tab);
+    setMobileMenuOpen(false);
+  };
+
   if (!token) {
     return <AdminLogin onLogin={(t) => setToken(t)} />;
   }
 
   return (
-    <div className="admin-saas-container">
+    <div className={`admin-saas-container ${mobileMenuOpen ? 'menu-open' : ''}`}>
+      {/* Mobile Bar */}
+      <div className="admin-mobile-bar">
+        <div className="admin-sidebar-logo" style={{ marginBottom: 0 }}>
+          <span className="logo-bracket">{'<'}</span>
+          <span className="logo-text">HP</span>
+          <span className="logo-bracket">{' />'}</span>
+        </div>
+        <button className={`admin-hamburger ${mobileMenuOpen ? 'active' : ''}`} onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+
       {/* Sidebar Navigation */}
-      <aside className="admin-saas-sidebar">
-        <div className="admin-sidebar-logo">
-          <span>📊</span>
-          <span>ADMIN</span>
+      <aside className={`admin-saas-sidebar ${mobileMenuOpen ? 'show' : ''}`}>
+        <div className="admin-sidebar-logo desktop-only" style={{ cursor: 'pointer' }} onClick={() => window.location.href = '/'}>
+          <span className="logo-bracket">{'<'}</span>
+          <span className="logo-text">HP</span>
+          <span className="logo-bracket">{' />'}</span>
+          <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginLeft: '8px', fontWeight: '400' }}>ADMIN</span>
         </div>
 
         <nav className="admin-sidebar-nav">
           <button 
             className={`admin-sidebar-btn ${activeTab === 'analytics' ? 'active' : ''}`} 
-            onClick={() => setActiveTab('analytics')}
+            onClick={() => switchTab('analytics')}
           >
             📈 <span>Analytics</span>
           </button>
           <button 
             className={`admin-sidebar-btn ${activeTab === 'inquiries' ? 'active' : ''}`} 
-            onClick={() => setActiveTab('inquiries')}
+            onClick={() => switchTab('inquiries')}
           >
             📩 <span>Inquiries</span>
             {inqStatusCounts.find(s => s.status === 'new')?.count > 0 && (
               <span className="tab-badge">{inqStatusCounts.find(s => s.status === 'new').count}</span>
             )}
           </button>
+
           <button 
             className={`admin-sidebar-btn ${activeTab === 'settings' ? 'active' : ''}`} 
-            onClick={() => setActiveTab('settings')}
+            onClick={() => switchTab('settings')}
           >
             ⚙️ <span>Settings</span>
           </button>
@@ -207,7 +228,7 @@ export default function AdminDashboard() {
         )}
 
       {/* Charts Row */}
-      {stats && (
+      {activeTab === 'analytics' && stats && (
         <div className="admin-charts" style={{ marginTop: '24px' }}>
           {/* Daily Trend */}
           <div className="admin-glass-card">
@@ -343,8 +364,8 @@ export default function AdminDashboard() {
 
       {/* Visits Table + Nearby Panel */}
       {activeTab === 'analytics' && (
-      <div className="admin-content" style={{ marginTop: '24px' }}>
-        <div className="admin-glass-card" style={{ overflowX: 'auto' }}>
+      <div className="admin-content" style={{ marginTop: '24px', alignItems: 'flex-start' }}>
+        <div className="admin-glass-card admin-table-wrapper" style={{ maxHeight: '500px', overflowY: 'auto' }}>
           <h3 style={{ fontSize: '0.9rem', marginBottom: '16px', color: 'var(--text-muted)' }}>RECENT VISITS {loading && '⏳'}</h3>
           <table className="admin-table">
             <thead>

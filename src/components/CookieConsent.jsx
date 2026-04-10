@@ -35,7 +35,7 @@ export default function CookieConsent() {
           <strong>We value your privacy</strong>
           <p>
             We use anonymized analytics to understand where our visitors are located and improve
-            our services. Your data is used for advertising insights only — no personal information
+            our services. Your data is used for advertising insights only. No personal information
             is collected or shared with third parties.
           </p>
         </div>
