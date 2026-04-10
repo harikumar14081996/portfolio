@@ -3,7 +3,7 @@ import { useGsapReveal } from '../hooks/useGsapReveal';
 const timelineData = [
   {
     date: 'May 2023 to August 2024',
-    title: 'Masters in Cloud Data Management',
+    title: 'Cloud Data Management',
     subtitle: 'Conestoga College · Ontario, Canada',
     details: 'A focused immersion into Microsoft SharePoint and the principles of Project Management. I spent this time perfecting my understanding of User Experience and advanced SQL Database architecture.',
     tags: ['SharePoint', 'Project Management', 'User Experience', 'SQL'],
@@ -11,7 +11,7 @@ const timelineData = [
   },
   {
     date: 'July 2021 to April 2023',
-    title: 'Software Engineer',
+    title: 'Web Developer',
     subtitle: 'Unistar Softech · Gujarat, India',
     details: 'Architected production platforms using React and Angular. I drove a twenty percent increase in team productivity and significantly reduced page load times through meticulous optimization.',
     tags: ['React', 'Angular', 'Dot NET', 'SQL Server', 'Agile'],
@@ -38,7 +38,7 @@ const timelineData = [
     title: 'Bachelor of Computer Application',
     subtitle: 'Uka Tarsadia University · Gujarat, India',
     details: 'The beginning of my obsession with computer science. Focused on pure database design and the fundamentals of the Java ecosystem.',
-    tags: ['Java', 'Database Design', 'ASP DOT NET Core', 'UNIX'],
+    tags: ['Java', 'Database Design', 'ASP.NET Core', 'UNIX', 'VB.NET', 'MSSQL'],
     type: 'education',
   },
 ];

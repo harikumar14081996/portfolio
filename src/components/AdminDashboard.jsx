@@ -17,12 +17,7 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Inquiries state
-  const [inquiries, setInquiries] = useState([]);
-  const [inqStatusFilter, setInqStatusFilter] = useState('');
-  const [inqStatusCounts, setInqStatusCounts] = useState([]);
-  const [selectedInquiry, setSelectedInquiry] = useState(null);
-  const [adminNotes, setAdminNotes] = useState('');
+
 
   // Password change state
   const [pwForm, setPwForm] = useState({ current: '', newPw: '', confirm: '' });
@@ -70,36 +65,14 @@ export default function AdminDashboard() {
     setNearbyLoading(false);
   };
 
-  const fetchInquiries = useCallback(async () => {
-    try {
-      const params = new URLSearchParams();
-      if (inqStatusFilter) params.set('status', inqStatusFilter);
-      const resp = await fetch(`/api/inquiries?${params}`, { headers });
-      if (resp.status === 401) { handleLogout(); return; }
-      const data = await resp.json();
-      setInquiries(data.inquiries || []);
-      setInqStatusCounts(data.statusCounts || []);
-    } catch { /* silent */ }
-  }, [token, inqStatusFilter]);
 
-  const updateInquiry = async (id, updates) => {
-    try {
-      await fetch(`/api/inquiries/${id}`, {
-        method: 'PATCH',
-        headers: { ...headers, 'Content-Type': 'application/json' },
-        body: JSON.stringify(updates),
-      });
-      fetchInquiries();
-    } catch { /* silent */ }
-  };
 
   useEffect(() => {
     if (token) {
       fetchStats();
       fetchVisits();
-      fetchInquiries();
     }
-  }, [token, fetchStats, fetchVisits, fetchInquiries]);
+  }, [token, fetchStats, fetchVisits]);
 
   const handleLogout = () => {
     sessionStorage.removeItem('analytics_token');
@@ -152,15 +125,7 @@ export default function AdminDashboard() {
           >
             📈 <span>Analytics</span>
           </button>
-          <button 
-            className={`admin-sidebar-btn ${activeTab === 'inquiries' ? 'active' : ''}`} 
-            onClick={() => switchTab('inquiries')}
-          >
-            📩 <span>Inquiries</span>
-            {inqStatusCounts.find(s => s.status === 'new')?.count > 0 && (
-              <span className="tab-badge">{inqStatusCounts.find(s => s.status === 'new').count}</span>
-            )}
-          </button>
+
 
           <button 
             className={`admin-sidebar-btn ${activeTab === 'settings' ? 'active' : ''}`} 
@@ -189,12 +154,7 @@ export default function AdminDashboard() {
               <p>Real-time insights on your portfolio visitors and engagement.</p>
             </>
           )}
-          {activeTab === 'inquiries' && (
-            <>
-              <h2>Inquiry Management</h2>
-              <p>Track and respond to incoming potential client leads.</p>
-            </>
-          )}
+
           {activeTab === 'settings' && (
             <>
               <h2>Account Settings</h2>
@@ -443,85 +403,7 @@ export default function AdminDashboard() {
       </div>
       )}
 
-      {/* ─── Inquiries Tab ─── */}
-      {activeTab === 'inquiries' && (
-        <div className="inquiries-section">
-          {/* Status Filter Tabs */}
-          <div className="inq-status-tabs">
-            <button className={`inq-tab ${inqStatusFilter === '' ? 'active' : ''}`} onClick={() => setInqStatusFilter('')}>
-              All ({inqStatusCounts.reduce((s, c) => s + c.count, 0)})
-            </button>
-            {['new', 'reviewed', 'replied', 'closed'].map(st => (
-              <button key={st} className={`inq-tab ${inqStatusFilter === st ? 'active' : ''}`} onClick={() => setInqStatusFilter(st)}>
-                {getStatusIcon(st)} {st.charAt(0).toUpperCase() + st.slice(1)} ({inqStatusCounts.find(c => c.status === st)?.count || 0})
-              </button>
-            ))}
-          </div>
 
-          <div className="inq-layout">
-            {/* Inquiries List */}
-            <div className="inq-list">
-              {inquiries.map(inq => (
-                <div key={inq.id} className={`inq-card ${selectedInquiry?.id === inq.id ? 'selected' : ''}`}
-                  onClick={() => { setSelectedInquiry(inq); setAdminNotes(inq.admin_notes || ''); }}>
-                  <div className="inq-card-header">
-                    <strong>{inq.name}</strong>
-                    <span className={`inq-status-badge status-${inq.status}`}>{getStatusIcon(inq.status)} {inq.status}</span>
-                  </div>
-                  <div className="inq-card-email">{inq.email}</div>
-                  <div className="inq-card-meta">
-                    {inq.project_type && <span>{inq.project_type}</span>}
-                    {inq.budget && <span>💰 {inq.budget}</span>}
-                  </div>
-                  <div className="inq-card-preview">{inq.message?.substring(0, 120)}...</div>
-                  <div className="inq-card-time">{formatTime(inq.created_at)}</div>
-                </div>
-              ))}
-              {inquiries.length === 0 && <div className="admin-muted" style={{ padding: '40px', textAlign: 'center' }}>No inquiries found</div>}
-            </div>
-
-            {/* Inquiry Detail */}
-            {selectedInquiry && (
-              <div className="inq-detail">
-                <h3>📧 Inquiry from {selectedInquiry.name}</h3>
-                <div className="inq-detail-grid">
-                  <div><span className="inq-label">Email</span><a href={`mailto:${selectedInquiry.email}`}>{selectedInquiry.email}</a></div>
-                  <div><span className="inq-label">Project</span>{selectedInquiry.project_type || '—'}</div>
-                  <div><span className="inq-label">Budget</span>{selectedInquiry.budget || '—'}</div>
-                  <div><span className="inq-label">Received</span>{formatTime(selectedInquiry.created_at)}</div>
-                </div>
-                <div className="inq-message">
-                  <span className="inq-label">Message</span>
-                  <p>{selectedInquiry.message}</p>
-                </div>
-
-                <div className="inq-actions">
-                  <span className="inq-label">Update Status</span>
-                  <div className="inq-action-btns">
-                    {['new', 'reviewed', 'replied', 'closed'].map(st => (
-                      <button key={st} className={`inq-action-btn ${selectedInquiry.status === st ? 'active' : ''}`}
-                        onClick={() => { updateInquiry(selectedInquiry.id, { status: st }); setSelectedInquiry({...selectedInquiry, status: st}); }}>
-                        {getStatusIcon(st)} {st}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="inq-notes">
-                  <span className="inq-label">Admin Notes</span>
-                  <textarea value={adminNotes} onChange={(e) => setAdminNotes(e.target.value)} placeholder="Add private notes about this inquiry..." rows={3} />
-                  <button className="inq-save-notes" onClick={() => updateInquiry(selectedInquiry.id, { admin_notes: adminNotes })}>
-                    Save Notes
-                  </button>
-                </div>
-
-                <a href={`mailto:${selectedInquiry.email}?subject=Re: Your Portfolio Inquiry&body=${encodeURIComponent(`Hi ${selectedInquiry.name},\n\nThank you for reaching out!\n\n`)}`}
-                  className="inq-reply-btn">✉️ Reply via Email</a>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
 
       {/* ─── Settings Tab ─── */}
       {activeTab === 'settings' && (
@@ -605,7 +487,4 @@ function getBusinessIcon(type) {
   return icons[type] || '🏪';
 }
 
-function getStatusIcon(status) {
-  const icons = { new: '🔵', reviewed: '🟡', replied: '🟢', closed: '⚪' };
-  return icons[status] || '⚪';
-}
+

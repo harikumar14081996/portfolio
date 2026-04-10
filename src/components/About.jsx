@@ -18,6 +18,9 @@ export default function About() {
     <section className="section" id="about" ref={sectionRef}>
       <div className="section-label reveal-item">About Me</div>
       <h2 className="section-title reveal-item">The Full Picture</h2>
+      <div className="about-legacy reveal-item">
+        Proud Son of <span className="father-name-highlight">Rajnikant Thakorbhai Patel</span>
+      </div>
       <div className="about-content">
         <div>
           <p className="about-text reveal-item">
