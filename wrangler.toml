@@ -9,4 +9,4 @@ directory = "./dist"
 [[d1_databases]]
 binding = "DB"
 database_name = "portfolio-visits"
-database_id = "placeholder-will-be-replaced"
+database_id = "a88c7643-a704-4cac-be8a-807c0ae05931"
