@@ -44,14 +44,15 @@ export default function Contact() {
         Ready to Build Something Exceptional?
       </h2>
       <p className="section-subtitle reveal-item" style={{ textAlign: 'center', margin: '0 auto 40px' }}>
-        Whether you need a full-stack web platform, a mobile app, an AI-powered product, or an IoT system -
-        fill out the form below and I'll get back to you within 24 hours.
+        Ready to scale your business or institution? Whether you need a high-performance web platform, 
+        intelligent mobile automation, or a complete digital strategy—I deliver robust, 
+        production-grade results within 24 hours.
       </p>
 
       <div className="contact-layout">
         {/* Inquiry Form */}
         <form className="inquiry-form reveal-item" onSubmit={handleSubmit}>
-          <h3>📩 Send an Inquiry</h3>
+          <h3>📩 Start a Project</h3>
 
           <div className="form-row">
             <div className="form-group">
@@ -69,14 +70,13 @@ export default function Contact() {
               <label htmlFor="inq-type">Project Type</label>
               <select id="inq-type" name="project_type" value={form.project_type} onChange={handleChange}>
                 <option value="">Select a type...</option>
-                <option value="Website Development">Website Development</option>
-                <option value="Mobile Application Development">Mobile Application Development</option>
-                <option value="Enterprise Web Platform">Enterprise Web Platform</option>
-                <option value="AI Engineering & Integration">AI Engineering & Integration</option>
-                <option value="Cloud Architecture / DevOps">Cloud Architecture / DevOps</option>
-                <option value="IoT & Hardware Systems">IoT & Hardware Systems</option>
-                <option value="Marketing">Marketing</option>
-                <option value="Technical Consulting">Technical Consulting</option>
+                <option value="Institutional / Enterprise Website">Institutional / Enterprise Website</option>
+                <option value="Mobile App Development (iOS/Android)">Mobile App Development (Swift/Flutter)</option>
+                <option value="Business Automation (n8n / OpenClaw)">Business Automation (n8n / OpenClaw)</option>
+                <option value="AI Agent & LLM Integration">AI Agent & LLM Integration</option>
+                <option value="Social Media & Digital Management">Social Media & Digital Management</option>
+                <option value="Technical Consulting / Code Audit">Technical Consulting / Code Audit</option>
+                <option value="Full-Stack Freelance Contract">Full-Stack Freelance Contract</option>
                 <option value="Other">Other</option>
               </select>
             </div>

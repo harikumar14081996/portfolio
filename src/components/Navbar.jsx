@@ -81,6 +81,11 @@ export default function Navbar({ theme, toggleTheme }) {
               </span>
             </button>
           </li>
+          <li className="nav-cta-wrapper">
+            <button className="nav-cta" onClick={() => scrollTo('contact')}>
+              Start a Project
+            </button>
+          </li>
         </ul>
 
         {/* Mobile hamburger */}
@@ -104,6 +109,9 @@ export default function Navbar({ theme, toggleTheme }) {
             {item.label}
           </a>
         ))}
+        <button className="nav-cta mobile-cta" onClick={() => scrollTo('contact')}>
+          Start a Project
+        </button>
         <button className="theme-toggle mobile-theme" onClick={toggleTheme}>
           {theme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode'}
         </button>

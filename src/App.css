@@ -131,8 +131,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .section-title {
-  font-size: clamp(2rem, 5vw, 3rem);
-  margin-bottom: 20px;
+  font-size: clamp(2.4rem, 6vw, 3.5rem);
+  margin-bottom: 24px;
+  letter-spacing: -0.5px;
   background: var(--gradient-accent);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -140,10 +141,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .section-subtitle {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   color: var(--text-secondary);
-  max-width: 600px;
-  line-height: 1.7;
+  max-width: 650px;
+  line-height: 1.75;
 }
 
 /* ---------- NAVBAR ---------- */
@@ -601,34 +602,34 @@ h1, h2, h3, h4, h5, h6 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  margin-top: -10px;
-  margin-bottom: 24px;
-  padding: 6px 18px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 30px;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  font-family: 'Inter', sans-serif;
-  font-size: 0.85rem;
+  margin-top: -12px;
+  margin-bottom: 32px;
+  padding: 8px 22px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-hover);
+  border-radius: 40px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
   text-transform: uppercase;
-  color: var(--text-secondary);
-  letter-spacing: 1px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
+  color: var(--text-muted);
+  letter-spacing: 1.5px;
+  box-shadow: var(--card-shadow);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .hero-father-badge:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(139, 92, 246, 0.4);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.15);
+  background: var(--bg-tertiary);
+  border-color: var(--accent-primary);
+  transform: translateY(-3px) scale(1.02);
+  color: var(--text-secondary);
 }
 
 .father-name-highlight {
   font-weight: 700;
-  color: var(--text-primary);
-  margin-left: 4px;
+  color: var(--accent-primary);
+  margin-left: 6px;
 }
 
 .hero-typed {
@@ -850,22 +851,47 @@ h1, h2, h3, h4, h5, h6 {
 /* ---------- PROJECTS ---------- */
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(12, 1fr);
   gap: 24px;
   margin-top: 40px;
 }
 
 .project-card {
+  grid-column: span 6;
   background: var(--bg-card);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 32px;
+  border-radius: 24px;
+  padding: 40px;
   cursor: pointer;
-  transition: all 0.4s ease;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-card.large {
+  grid-column: span 12;
+}
+
+@media (min-width: 1024px) {
+  .project-card.large {
+    grid-column: span 8;
+  }
+  .project-card.small {
+    grid-column: span 4;
+  }
+}
+
+@media (max-width: 768px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+  .project-card, .project-card.large, .project-card.small {
+    grid-column: span 1;
+  }
 }
 
 .project-card::before {
@@ -2416,4 +2442,183 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+}
+
+/* Nav CTA */
+.nav-cta {
+  background: var(--gradient-accent);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  margin-left: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px var(--accent-glow);
+}
+.nav-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px var(--accent-glow-strong);
+}
+.nav-cta.mobile-cta {
+  margin: 10px 0 0 0;
+  padding: 14px 16px;
+  width: 100%;
+  text-align: center;
+  font-size: 1.05rem;
+}
+
+/* ─── NEW SaaS Admin Layout ─── */
+.admin-saas-container {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.admin-saas-sidebar {
+  width: 280px;
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border);
+  padding: 32px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.admin-sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.2rem;
+  font-weight: 800;
+  padding: 0 12px;
+}
+
+.admin-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.admin-sidebar-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  text-align: left;
+}
+
+.admin-sidebar-btn:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.admin-sidebar-btn.active {
+  background: var(--accent-primary);
+  color: white;
+  box-shadow: 0 4px 15px var(--accent-glow);
+}
+
+.admin-sidebar-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.admin-main-content {
+  flex: 1;
+  padding: 40px;
+  overflow-y: auto;
+  background: var(--bg-primary);
+}
+
+.admin-section-header {
+  margin-bottom: 32px;
+}
+
+.admin-section-header h2 {
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+}
+
+.admin-section-header p {
+  color: var(--text-muted);
+}
+
+/* Glassy Stat Cards */
+.admin-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.admin-glass-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px;
+  transition: all 0.3s ease;
+}
+
+.admin-glass-card:hover {
+  border-color: var(--accent-primary);
+  transform: translateY(-4px);
+}
+
+@media (max-width: 1024px) {
+  .admin-saas-sidebar {
+    width: 80px;
+    padding: 32px 10px;
+  }
+  .admin-sidebar-btn span {
+    display: none;
+  }
+  .admin-sidebar-logo span {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-saas-container {
+    flex-direction: column;
+  }
+  .admin-saas-sidebar {
+    width: 100%;
+    height: auto;
+    position: static;
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 10px;
+    gap: 10px;
+  }
+  .admin-sidebar-logo, .admin-sidebar-footer {
+    display: none;
+  }
+  .admin-sidebar-nav {
+    flex-direction: row;
+  }
+  .admin-main-content {
+    padding: 20px;
+  }
 }

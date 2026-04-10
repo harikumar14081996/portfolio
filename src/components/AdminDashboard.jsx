@@ -117,64 +117,101 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="admin-wrapper">
-      {/* Header */}
-      <header className="admin-header">
-        <div className="admin-header-left">
-          <h1>📊 Portfolio Dashboard</h1>
+    <div className="admin-saas-container">
+      {/* Sidebar Navigation */}
+      <aside className="admin-saas-sidebar">
+        <div className="admin-sidebar-logo">
+          <span>📊</span>
+          <span>ADMIN</span>
         </div>
-        <div className="admin-header-right">
-          <a href="/" className="admin-link">← Portfolio</a>
-          <button onClick={handleLogout} className="admin-logout">Logout</button>
-        </div>
-      </header>
 
-      {/* Tab Navigation */}
-      <div className="admin-tabs">
-        <button className={`admin-tab ${activeTab === 'analytics' ? 'active' : ''}`} onClick={() => setActiveTab('analytics')}>
-          📈 Analytics
-        </button>
-        <button className={`admin-tab ${activeTab === 'inquiries' ? 'active' : ''}`} onClick={() => setActiveTab('inquiries')}>
-          📩 Inquiries
-          {inqStatusCounts.find(s => s.status === 'new')?.count > 0 && (
-            <span className="tab-badge">{inqStatusCounts.find(s => s.status === 'new').count}</span>
+        <nav className="admin-sidebar-nav">
+          <button 
+            className={`admin-sidebar-btn ${activeTab === 'analytics' ? 'active' : ''}`} 
+            onClick={() => setActiveTab('analytics')}
+          >
+            📈 <span>Analytics</span>
+          </button>
+          <button 
+            className={`admin-sidebar-btn ${activeTab === 'inquiries' ? 'active' : ''}`} 
+            onClick={() => setActiveTab('inquiries')}
+          >
+            📩 <span>Inquiries</span>
+            {inqStatusCounts.find(s => s.status === 'new')?.count > 0 && (
+              <span className="tab-badge">{inqStatusCounts.find(s => s.status === 'new').count}</span>
+            )}
+          </button>
+          <button 
+            className={`admin-sidebar-btn ${activeTab === 'settings' ? 'active' : ''}`} 
+            onClick={() => setActiveTab('settings')}
+          >
+            ⚙️ <span>Settings</span>
+          </button>
+        </nav>
+
+        <div className="admin-sidebar-footer">
+          <a href="/" className="admin-sidebar-btn" style={{ textDecoration: 'none' }}>
+            ← <span>Back to Site</span>
+          </a>
+          <button onClick={handleLogout} className="admin-sidebar-btn" style={{ color: '#ef4444' }}>
+            🚪 <span>Logout</span>
+          </button>
+        </div>
+      </aside>
+
+      {/* Main Content Area */}
+      <main className="admin-main-content">
+        <header className="admin-section-header">
+          {activeTab === 'analytics' && (
+            <>
+              <h2>Analytics Overview</h2>
+              <p>Real-time insights on your portfolio visitors and engagement.</p>
+            </>
           )}
-        </button>
-        <button className={`admin-tab ${activeTab === 'settings' ? 'active' : ''}`} onClick={() => setActiveTab('settings')}>
-          ⚙️ Settings
-        </button>
-      </div>
+          {activeTab === 'inquiries' && (
+            <>
+              <h2>Inquiry Management</h2>
+              <p>Track and respond to incoming potential client leads.</p>
+            </>
+          )}
+          {activeTab === 'settings' && (
+            <>
+              <h2>Account Settings</h2>
+              <p>Manage your administrative credentials and security.</p>
+            </>
+          )}
+        </header>
 
-      {/* Stats Cards */}
-      {activeTab === 'analytics' && stats && (
-        <div className="admin-stats">
-          <div className="admin-stat-card">
-            <div className="stat-value">{stats.total?.toLocaleString()}</div>
-            <div className="stat-desc">Total Visits</div>
-          </div>
-          <div className="admin-stat-card">
-            <div className="stat-value">{stats.uniqueCountries}</div>
-            <div className="stat-desc">Countries</div>
-          </div>
-          <div className="admin-stat-card">
-            <div className="stat-value">{stats.uniqueCities}</div>
-            <div className="stat-desc">Unique Cities</div>
-          </div>
-          <div className="admin-stat-card">
-            <div className="stat-value">
-              {stats.deviceBreakdown?.find(d => d.device_type === 'mobile')?.count || 0}
+        {/* Stats Grid */}
+        {activeTab === 'analytics' && stats && (
+          <div className="admin-stat-grid">
+            <div className="admin-glass-card">
+              <div className="stat-desc">Total Visits</div>
+              <div className="stat-value">{stats.total?.toLocaleString()}</div>
             </div>
-            <div className="stat-desc">Mobile Visits</div>
+            <div className="admin-glass-card">
+              <div className="stat-desc">Unique Countries</div>
+              <div className="stat-value">{stats.uniqueCountries}</div>
+            </div>
+            <div className="admin-glass-card">
+              <div className="stat-desc">Unique Cities</div>
+              <div className="stat-value">{stats.uniqueCities}</div>
+            </div>
+            <div className="admin-glass-card">
+              <div className="stat-desc">Mobile Reach</div>
+              <div className="stat-value">
+                {stats.deviceBreakdown?.find(d => d.device_type === 'mobile')?.count || 0}
+              </div>
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
       {/* Charts Row */}
       {stats && (
-        <div className="admin-charts">
+        <div className="admin-charts" style={{ marginTop: '24px' }}>
           {/* Daily Trend */}
-          <div className="admin-chart-card">
-            <h3>Daily Visits (Last 30 Days)</h3>
+          <div className="admin-glass-card">
+            <h3 style={{ fontSize: '0.9rem', marginBottom: '16px', color: 'var(--text-muted)' }}>DAILY VISITS (LAST 30 DAYS)</h3>
             <div className="mini-chart">
               {stats.dailyCounts?.length > 0 ? (
                 <svg viewBox={`0 0 ${stats.dailyCounts.length * 20} 100`} className="chart-svg">
@@ -201,8 +238,8 @@ export default function AdminDashboard() {
           </div>
 
           {/* Top Countries */}
-          <div className="admin-chart-card">
-            <h3>Top Countries</h3>
+          <div className="admin-glass-card">
+            <h3 style={{ fontSize: '0.9rem', marginBottom: '16px', color: 'var(--text-muted)' }}>TOP COUNTRIES</h3>
             <div className="top-list">
               {stats.topCountries?.map((c, i) => (
                 <div key={i} className="top-item">
@@ -220,8 +257,8 @@ export default function AdminDashboard() {
           </div>
 
           {/* Top Cities */}
-          <div className="admin-chart-card">
-            <h3>Top Cities</h3>
+          <div className="admin-glass-card">
+            <h3 style={{ fontSize: '0.9rem', marginBottom: '16px', color: 'var(--text-muted)' }}>TOP CITIES</h3>
             <div className="top-list">
               {stats.topCities?.map((c, i) => (
                 <div key={i} className="top-item">
@@ -239,8 +276,8 @@ export default function AdminDashboard() {
           </div>
 
           {/* Section Views */}
-          <div className="admin-chart-card">
-            <h3>Section Views</h3>
+          <div className="admin-glass-card">
+            <h3 style={{ fontSize: '0.9rem', marginBottom: '16px', color: 'var(--text-muted)' }}>SECTION VIEWS</h3>
             <div className="top-list">
               {stats.sectionViews?.map((s, i) => (
                 <div key={i} className="top-item">
@@ -306,9 +343,9 @@ export default function AdminDashboard() {
 
       {/* Visits Table + Nearby Panel */}
       {activeTab === 'analytics' && (
-      <div className="admin-content">
-        <div className="admin-table-wrap">
-          <h3>Recent Visits {loading && '⏳'}</h3>
+      <div className="admin-content" style={{ marginTop: '24px' }}>
+        <div className="admin-glass-card" style={{ overflowX: 'auto' }}>
+          <h3 style={{ fontSize: '0.9rem', marginBottom: '16px', color: 'var(--text-muted)' }}>RECENT VISITS {loading && '⏳'}</h3>
           <table className="admin-table">
             <thead>
               <tr>
@@ -508,6 +545,7 @@ export default function AdminDashboard() {
           </div>
         </div>
       )}
+      </main>
     </div>
   );
 }

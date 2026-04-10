@@ -78,11 +78,9 @@ export default function Hero({ theme }) {
         <div className="hero-typed">
           <TypeAnimation
             sequence={[
-              'Building Enterprise Platforms', 2000,
-              'Architecting AI Solutions', 2000,
-              'Engineering Mobile Experiences', 2000,
-              'Designing Scalable Cloud Systems', 2000,
-              'Creating IoT Innovations', 2000,
+              'Architecting High-ROI Web Platforms', 2000,
+              'Engineering Intelligent Mobile Apps', 2000,
+              'Scaling Cloud & Enterprise Systems', 2000,
             ]}
             wrapper="span"
             speed={50}
@@ -90,8 +88,7 @@ export default function Hero({ theme }) {
           />
         </div>
         <p className="hero-desc">
-          Full-Stack & Mobile Engineer crafting robust, scalable software
-          across web, mobile, cloud, and AI - based in Surrey, BC 🇨🇦
+          I am a Full-Stack & Mobile Engineer who builds production-grade software. From scalable cloud infrastructures to on-device AI, I help technical teams and businesses ship robust products that users love.
         </p>
         <div className="hero-buttons">
           <MagneticButton href="#projects" variant="primary">

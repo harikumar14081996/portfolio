@@ -3,7 +3,7 @@ import './App.css';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
-import TechStack from './components/TechStack';
+import Services from './components/TechStack';
 import Projects from './components/Projects';
 import AcademicProjects from './components/AcademicProjects';
 import Timeline from './components/Timeline';
@@ -57,7 +57,7 @@ export default function App() {
       <Navbar theme={theme} toggleTheme={toggleTheme} />
       <Hero theme={theme} />
       <About />
-      <TechStack />
+      <Services />
       <Projects />
       <AcademicProjects />
       <Timeline />

@@ -94,23 +94,23 @@ const projectsData = [
     title: 'MeetPilot',
     subtitle: 'Agentic Voice Intelligence Platform',
     desc: 'A next-gen voice-first productivity agent for iOS/macOS with on-device transcription, speaker diarization, AI summaries, and multi-destination exports.',
-    tech: ['SwiftUI', 'Whisper', 'GPT-4o', 'CoreData', 'Swift Concurrency'],
+    tech: ['SwiftUI', 'Whisper', 'Apple Foundation Models', 'CoreData', 'Swift Concurrency'],
     status: '🧪 Internal Testing (TestFlight)',
     statusLink: null,
     role: 'iOS Engineer & AI Architect',
     problem: 'Professionals waste hours manually capturing meeting notes, action items, and follow-ups. Existing solutions require cloud processing with privacy concerns and latency issues.',
-    solution: 'I developed MeetPilot — a voice-first productivity agent for iOS and macOS. It features on-device transcription via Whisper on Apple\'s Neural Engine, agentic GPT-4o workflows for intelligent summaries, speaker diarization to identify who said what, template-based meeting summaries (Standups, Board Meetings, 1:1s), AI-powered email rewriting with tone selection, and robust exports to Apple Notes, PDF, Slack, and Notion.',
+    solution: 'I developed MeetPilot — a voice-first productivity agent for iOS and macOS. It features on-device transcription via Whisper on Apple\'s Neural Engine, agentic Apple Foundation Model workflows for intelligent summaries, speaker diarization to identify who said what, template-based meeting summaries (Standups, Board Meetings, 1:1s), AI-powered email rewriting with tone selection, and robust exports to Apple Notes, PDF, Slack, and Notion.',
     impact: [
       { bold: 'On-Device Neural Transcription', text: 'Whisper model runs locally on Apple Silicon Neural Engine — high-fidelity transcription with minimal battery impact and zero data leaving the device.' },
       { bold: 'Speaker Diarization', text: 'Built-in VAD and clustering identifies distinct speakers, rendering transcripts with "Speaker 1, Speaker 2" labels that users can rename inline.' },
-      { bold: 'Agentic AI Summaries', text: 'Template-based AI processing (Daily Standup, Board Meeting, 1:1, Brainstorming) extracts blockers, decisions, and action items contextually.' },
+      { bold: 'Agentic AI Summaries', text: 'On-device foundation model processing (Daily Standup, Board Meeting, 1:1, Brainstorming) extracts blockers, decisions, and action items contextually.' },
       { bold: 'AI Email Rewrite', text: 'One-tap rewrite of any memo into professional emails with tone selection (Friendly, Professional, Formal) — export directly to Gmail, Outlook, or Mail.' },
       { bold: 'Multi-Destination Export', text: 'Robust export pipeline to Apple Notes, PDF (styled documents), Slack webhooks, and Notion API — all from one unified interface.' },
       { bold: 'CoreSpotlight Integration', text: 'Every transcript and summary is natively indexed — searchable from iOS Home Screen or macOS Spotlight.' },
     ],
     arch: [
       ['SwiftUI Interface', 'AVFoundation'],
-      ['Whisper (Neural Engine)', 'GPT-4o Agentic API'],
+      ['Whisper (Neural Engine)', 'Apple Foundation Models (On-Device)'],
       ['CoreData', 'CoreSpotlight'],
       ['Export: Notes / PDF / Slack / Notion'],
     ],
@@ -133,19 +133,29 @@ export default function Projects() {
           to AI-powered mobile apps. Click any project to see the full architecture and impact.
         </p>
         <div className="projects-grid">
-          {projectsData.map((project) => (
-            <div key={project.id} className="project-card reveal-item" onClick={() => setSelectedProject(project)}>
+          {projectsData.map((project, index) => (
+            <div 
+              key={project.id} 
+              className={`project-card reveal-item ${index % 3 === 0 ? 'large' : 'small'}`} 
+              onClick={() => setSelectedProject(project)}
+            >
               <div className="project-icon">{project.icon}</div>
               <h3 className="project-title">{project.title}</h3>
-              <p className="project-subtitle">{project.desc}</p>
+              <p className="project-subtitle">{project.subtitle}</p>
+              <p className="project-card-desc" style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '20px' }}>
+                {project.desc.length > 100 ? project.desc.substring(0, 100) + '...' : project.desc}
+              </p>
               <div className="project-tech">
-                {project.tech.map((t, i) => <span key={i}>{t}</span>)}
+                {project.tech.slice(0, 4).map((t, i) => <span key={i}>{t}</span>)}
+                {project.tech.length > 4 && <span>+{project.tech.length - 4}</span>}
               </div>
-              <div className="project-status">
-                {project.status}
-              </div>
-              <div className="project-cta">
-                Click to explore architecture →
+              <div style={{ marginTop: 'auto' }}>
+                <div className="project-status">
+                  {project.status}
+                </div>
+                <div className="project-cta">
+                  Case Study & Architecture →
+                </div>
               </div>
             </div>
           ))}
