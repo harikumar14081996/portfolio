@@ -1931,8 +1931,7 @@ h1, h2, h3, h4, h5, h6 {
 .admin-hamburger.active span:nth-child(2) { opacity: 0; }
 .admin-hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* Purged legacy sidebar styles entirely */
-
+@media (max-width: 968px) {
   .admin-mobile-bar { display: flex; }
   .desktop-only { display: none; }
 
