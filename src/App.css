@@ -1793,7 +1793,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .admin-back:hover { color: var(--accent-primary); }
 
-/* ─── Dashboard Layout ─── */
+/* ─── Dashboard Layout (Pure Content Architecture) ─── */
 .admin-saas-container {
   display: flex;
   flex-direction: column;
@@ -1804,168 +1804,11 @@ h1, h2, h3, h4, h5, h6 {
   overflow-x: hidden;
 }
 
-.admin-saas-sidebar {
-  display: none; /* FORCIBLY HIDE ON DESKTOP */
-}
-/* ─── ADMIN NAVBAR (Home Page Mirror) ─── */
-.admin-navbar {
-  position: fixed;
-  top: 30px; /* Floating floating */
-  left: 0;
-  width: 100%;
-  z-index: 2000;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  display: flex;
-  justify-content: center;
-}
-
-.admin-navbar-inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 95%;
-  max-width: 1100px;
-  padding: 10px 24px;
-  background: var(--navbar-bg);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid var(--border);
-  border-radius: 99px;
-  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
-}
-
-.admin-nav-links {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  list-style: none;
-}
-
-.admin-nav-link {
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--text-muted);
-  text-decoration: none;
-  padding: 8px 14px;
-  border-radius: 10px;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  position: relative;
-  border: none;
-  background: transparent;
-}
-
-.admin-nav-link:hover {
-  color: var(--text-primary);
-  background: var(--accent-glow);
-}
-
-.admin-nav-link.active {
-  color: var(--accent-primary);
-  font-weight: 600;
-}
-
-.admin-nav-link.active::after {
-  content: '';
-  position: absolute;
-  bottom: 4px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--accent-primary);
-  box-shadow: 0 0 8px var(--accent-glow);
-}
-
-/* Removed legacy sidebar styles from 1806-1875 */
-
-.admin-glass-card {
-  background: var(--bg-card);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
-  border: 1px solid var(--border);
-  border-radius: 24px;
-  padding: 32px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-  transition: all 0.4s ease;
-}
-
-.admin-glass-card:hover {
-  border-color: var(--accent-primary);
-}
-
-.stat-value {
-  font-size: 2.2rem;
-  font-weight: 800;
-  letter-spacing: var(--letter-spacing-tight);
-}
-
-.stat-desc {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.admin-hamburger {
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  width: 28px;
-  padding: 4px;
-}
-
-.admin-hamburger span {
-  display: block;
-  width: 100%;
-  height: 2px;
-  background: var(--text-primary);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.admin-hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.admin-hamburger.active span:nth-child(2) { opacity: 0; }
-.admin-hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
 @media (max-width: 968px) {
-  .admin-mobile-bar { display: flex; }
-  .desktop-only { display: none; }
-
-  .admin-saas-sidebar {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    left: auto;
-    width: 280px;
-    height: 100vh;
-    z-index: 3000;
-    transition: right 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    background: var(--bg-secondary);
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
-    box-shadow: -20px 0 60px rgba(0,0,0,0.5);
-    padding: 100px 32px 40px;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .admin-saas-sidebar.show {
-    right: 0;
-  }
-
-  .admin-saas-sidebar .admin-sidebar-btn {
-    font-size: 1.1rem;
-    padding: 18px 20px;
-  }
-
-/* Removed legacy mobile sidebar styles */
+/* Purged Mobile Navigation artifacts */
 
   .admin-main-content {
-    padding: 100px 16px 40px; /* Matched portfolio padding */
+    padding: 40px 16px; /* Reset padding to remove navbar gap */
     width: 100%;
     overflow-x: hidden;
   }
@@ -3180,7 +3023,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .admin-main-content {
   flex: 1;
-  padding: 100px 40px 40px; /* Standardized spacing */
+  padding: 40px; /* Reset padding */
   overflow-y: auto;
   width: 100%;
   background: var(--bg-primary);
