@@ -178,7 +178,20 @@ export default function AdminDashboard() {
       if (resp.ok) fetchInquiries();
     } catch { /* silent */ }
   };
-
+  const deleteInquiry = async (id) => {
+    if (!window.confirm('Are you sure you want to permanently delete this lead?')) return;
+    try {
+      const resp = await fetch(`/api/inquiries/${id}`, {
+        method: 'DELETE',
+        headers,
+      });
+      if (resp.ok) {
+        fetchInquiries();
+        setSelectedVisit(null);
+        setInqMobileFocus(false);
+      }
+    } catch { /* silent */ }
+  };
 
 
   useEffect(() => {
@@ -277,23 +290,23 @@ export default function AdminDashboard() {
             className={`admin-sidebar-btn ${activeTab === 'social' ? 'active' : ''}`} 
             onClick={() => switchTab('social')}
           >
-            🔗 <span>Social</span>
+            <Share2 size={18} /> <span>Social</span>
           </button>
 
           <button 
             className={`admin-sidebar-btn ${activeTab === 'settings' ? 'active' : ''}`} 
             onClick={() => switchTab('settings')}
           >
-            ⚙️ <span>Settings</span>
+            <Settings size={18} /> <span>Settings</span>
           </button>
         </nav>
 
         <div className="admin-sidebar-footer">
           <a href="/" className="admin-sidebar-btn" style={{ textDecoration: 'none' }}>
-            ← <span>Back to Site</span>
+            <ArrowLeft size={18} /> <span>Back to Site</span>
           </a>
           <button onClick={handleLogout} className="admin-sidebar-btn" style={{ color: '#ef4444' }}>
-            🚪 <span>Logout</span>
+            <LogOut size={18} /> <span>Logout</span>
           </button>
         </div>
       </aside>
@@ -586,7 +599,7 @@ export default function AdminDashboard() {
 
       {/* ─── Inquiries Tab ─── */}
       {activeTab === 'inquiries' && (
-        <div className="admin-content" style={{ marginTop: '24px' }}>
+        <div className="admin-content" style={{ marginTop: '24px', gridTemplateColumns: '1fr' }}>
           <div className="admin-glass-card inq-layout">
             <div className={`inq-list-container ${inqMobileFocus ? 'hidden-mobile' : ''}`}>
               <h3 className="inq-header">ACTIVE LEADS {inqLoading && '⏳'}</h3>
@@ -654,12 +667,20 @@ export default function AdminDashboard() {
                          <Check size={18} />
                       </button>
                       <button 
-                        className="admin-circle-btn delete" 
+                        className="admin-circle-btn close" 
                         onClick={() => updateInquiry(selectedVisit.id, 'closed')}
                         disabled={selectedVisit.status === 'closed'}
                         title="Close Lead"
                       >
-                         <X size={18} />
+                         <EyeOff size={18} />
+                      </button>
+                      <button 
+                        className="admin-circle-btn delete" 
+                        onClick={() => deleteInquiry(selectedVisit.id)}
+                        title="Delete Permanently"
+                        style={{ background: 'rgba(239, 68, 68, 0.1)', color: '#ef4444' }}
+                      >
+                         <Trash2 size={18} />
                       </button>
                     </div>
                   </div>
@@ -677,7 +698,7 @@ export default function AdminDashboard() {
 
       {/* ─── Reviews Tab ─── */}
       {activeTab === 'reviews' && (
-        <div className="admin-content" style={{ marginTop: '24px' }}>
+        <div className="admin-content" style={{ marginTop: '24px', gridTemplateColumns: '1fr' }}>
           <div className="admin-glass-card admin-table-wrapper">
             <h3 style={{ fontSize: '0.9rem', marginBottom: '16px', color: 'var(--text-muted)' }}>
               CLIENT FEEDBACK {revLoading && '⏳'}

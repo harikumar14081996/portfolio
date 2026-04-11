@@ -152,8 +152,9 @@ export default {
 
         // PATCH /api/inquiries/:id — Update inquiry (admin)
         const inquiryMatch = path.match(/^\/api\/inquiries\/(\d+)$/);
-        if (inquiryMatch && request.method === 'PATCH') {
-          return await handleUpdateInquiry(inquiryMatch[1], request, env);
+        if (inquiryMatch) {
+          if (request.method === 'PATCH') return await handleUpdateInquiry(inquiryMatch[1], request, env);
+          if (request.method === 'DELETE') return await handleDeleteInquiry(inquiryMatch[1], env);
         }
 
         // GET /api/admin/reviews — List all reviews (admin)
@@ -453,6 +454,11 @@ async function handleUpdateInquiry(id, request, env) {
   await env.DB.prepare(`UPDATE inquiries SET ${updates.join(', ')} WHERE id = ?`)
     .bind(...params).run();
 
+  return json({ ok: true });
+}
+
+async function handleDeleteInquiry(id, env) {
+  await env.DB.prepare('DELETE FROM inquiries WHERE id = ?').bind(id).run();
   return json({ ok: true });
 }
 

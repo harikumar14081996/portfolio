@@ -1800,6 +1800,7 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--bg-primary);
   font-family: 'Outfit', sans-serif;
   color: var(--text-primary);
+  overflow: hidden; /* Prevent body scroll during dashboard use */
 }
 
 .admin-saas-sidebar {
@@ -1824,7 +1825,7 @@ h1, h2, h3, h4, h5, h6 {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px; /* Tighter gap for SaaS feel */
 }
 
 .admin-sidebar-btn {
@@ -1970,7 +1971,7 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .admin-main-content {
-    padding: 24px 16px;
+    padding: 20px 12px;
     width: 100%;
     overflow-x: hidden;
   }
@@ -2076,7 +2077,7 @@ h1, h2, h3, h4, h5, h6 {
 /* ─── Stats Cards ─── */
 .admin-stats {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 16px;
   margin-bottom: 24px;
 }
@@ -2598,13 +2599,7 @@ h1, h2, h3, h4, h5, h6 {
    ADMIN TABS + INQUIRIES PANEL
    ======================================== */
 .admin-tabs {
-  display: flex;
-  gap: 4px;
-  margin-bottom: 24px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 4px;
+  display: none; /* Removed redundant tab bar */
 }
 .admin-tab {
   flex: 1;
