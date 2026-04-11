@@ -19,7 +19,7 @@ export default function AdminDashboard() {
   const [nearbyLoading, setNearbyLoading] = useState(false);
   const [selectedVisit, setSelectedVisit] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [loading, setLoading] = useState(true);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [reviews, setReviews] = useState([]);
   const [revCounts, setRevCounts] = useState([]);
   const [revLoading, setRevLoading] = useState(false);
@@ -239,9 +239,90 @@ export default function AdminDashboard() {
     return <AdminLogin onLogin={(t) => setToken(t)} />;
   }
 
+  const adminNavItems = [
+    { id: 'analytics', label: 'Analytics' },
+    { id: 'reviews', label: 'Reviews' },
+    { id: 'inquiries', label: 'Inquiries', badge: inqCounts.new },
+    { id: 'social', label: 'Social' },
+    { id: 'settings', label: 'Settings' },
+  ];
+
   return (
     <div className="admin-saas-container">
-      {/* Purged All Navigation (Top & Side) */}
+      {/* ─── Universal Synchronized Navbar (Home Page Clone) ─── */}
+      <nav className="navbar scrolled">
+        <div className="navbar-inner">
+          {/* Logo */}
+          <span className="navbar-logo" onClick={() => window.location.href = '/'}>
+            <span className="logo-bracket">{'<'}</span>
+            <span className="logo-text">HP</span>
+            <span className="logo-bracket">{' />'}</span>
+          </span>
+
+          {/* Desktop Nav Links */}
+          <ul className="navbar-links">
+            {adminNavItems.map((item) => (
+              <li key={item.id}>
+                <a
+                  onClick={() => switchTab(item.id)}
+                  className={activeTab === item.id ? 'nav-active' : ''}
+                >
+                  {item.label}
+                  {item.badge > 0 && <span className="tab-badge">{item.badge}</span>}
+                  <span className="nav-indicator" />
+                </a>
+              </li>
+            ))}
+            <li className="nav-divider" />
+            <li className="nav-cta-wrapper">
+              <button 
+                className="nav-cta" 
+                onClick={handleLogout}
+                style={{ background: '#ef4444' }}
+              >
+                Logout
+              </button>
+            </li>
+          </ul>
+
+          {/* Mobile Hamburger */}
+          <button 
+            className={`hamburger ${mobileMenuOpen ? 'open' : ''}`} 
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)} 
+            aria-label="Menu"
+          >
+            <span /><span /><span />
+          </button>
+        </div>
+
+        {/* Mobile Backdrop Overlay */}
+        {mobileMenuOpen && <div className="mobile-backdrop" onClick={() => setMobileMenuOpen(false)} />}
+
+        {/* Mobile Slide-in Menu */}
+        <div className={`mobile-menu ${mobileMenuOpen ? 'show' : ''}`}>
+          <button className="mobile-close" onClick={() => setMobileMenuOpen(false)} aria-label="Close menu">
+            ✕
+          </button>
+
+          {adminNavItems.map((item) => (
+            <a 
+              key={item.id} 
+              onClick={() => switchTab(item.id)} 
+              className={activeTab === item.id ? 'nav-active' : ''}
+            >
+              {item.label}
+              {item.badge > 0 && <span className="tab-badge" style={{ verticalAlign: 'middle', marginLeft: '6px' }}>{item.badge}</span>}
+            </a>
+          ))}
+          <button 
+            className="nav-cta mobile-cta" 
+            onClick={handleLogout}
+            style={{ background: '#ef4444', marginTop: 'auto' }}
+          >
+            Logout
+          </button>
+        </div>
+      </nav>
 
       {/* Main Content Area */}
       <main className="admin-main-content">

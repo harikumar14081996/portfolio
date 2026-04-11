@@ -1808,7 +1808,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Purged Mobile Navigation artifacts */
 
   .admin-main-content {
-    padding: 40px 16px; /* Reset padding to remove navbar gap */
+    padding: 120px 16px 40px; /* Offset for floating navbar on mobile */
     width: 100%;
     overflow-x: hidden;
   }
@@ -3023,7 +3023,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .admin-main-content {
   flex: 1;
-  padding: 40px; /* Reset padding */
+  padding: 110px 40px 40px; /* Offset for floating navbar */
   overflow-y: auto;
   width: 100%;
   background: var(--bg-primary);
