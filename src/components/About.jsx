@@ -26,8 +26,15 @@ export default function About() {
           <p className="about-text reveal-item">
             I believe that great software should feel <span className="highlight">completely invisible</span>. It should be there when you need it, and solve your problem before you even have to ask.
           </p>
-          <p className="about-text reveal-item" style={{ marginTop: '16px' }}>
-            With <span className="highlight">over three years of experience</span> building tools for hotels, finance, and medical engineering, I have learned one major thing: **Users care about results, not just code.** I take pride in building systems that anyone can use—tools that feel natural, fast, and simple.
+          
+          <div className="philosophy-block reveal-item">
+            <span className="philosophy-quote">“</span>
+            <h3>Users care about results, not just code.</h3>
+            <p>I take pride in building systems that anyone can use—tools that feel natural, fast, and simple.</p>
+          </div>
+
+          <p className="about-text reveal-item" style={{ marginTop: '24px' }}>
+            With <span className="highlight">over three years of experience</span> building tools for hotels, finance, and medical engineering, I leading projects from the first sketch to the final deployment. 
           </p>
           <p className="about-text reveal-item" style={{ marginTop: '16px' }}>
             I lead projects from the first sketch to the final deployment. Whether I am building an AI agent or a property management system, my goal is always the same: **Deliver excellence that remains one hundred percent consistent.**

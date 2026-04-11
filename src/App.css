@@ -2658,7 +2658,113 @@ h1, h2, h3, h4, h5, h6 {
   transition: all 0.2s;
 }
 .inq-tab.active { background: var(--accent-primary); color: white; border-color: var(--accent-primary); }
-.inq-tab:hover:not(.active) { border-color: var(--accent-primary); }
+.hero-philosophy-tag {
+  background: var(--accent-glow);
+  color: var(--accent-primary);
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: inline-block;
+  margin-bottom: 16px;
+  border: 1px solid rgba(var(--accent-rgb), 0.2);
+  letter-spacing: 2px;
+}
+
+.philosophy-block {
+  margin: 40px 0;
+  padding: 32px;
+  background: var(--bg-tertiary);
+  border-left: 4px solid var(--accent-primary);
+  border-radius: 0 16px 16px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.philosophy-quote {
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  font-size: 5rem;
+  color: var(--accent-primary);
+  opacity: 0.1;
+  font-family: serif;
+  line-height: 1;
+}
+
+.philosophy-block h3 {
+  font-size: 1.4rem;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  position: relative;
+  z-index: 1;
+}
+
+.philosophy-block p {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* Admin Standardization */
+.admin-circle-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  background: var(--bg-tertiary);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 0;
+}
+
+.admin-circle-btn:hover {
+  transform: translateY(-2px);
+  background: var(--bg-secondary);
+  color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  box-shadow: 0 4px 12px var(--accent-glow);
+}
+
+.admin-circle-btn.approve:hover { color: #22c55e; border-color: #22c55e; box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2); }
+.admin-circle-btn.delete:hover { color: #ef4444; border-color: #ef4444; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2); }
+
+.inq-search-wrap {
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.inq-search-input {
+  width: 100%;
+  padding: 10px 14px 10px 36px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.inq-search-input:focus {
+  border-color: var(--accent-primary);
+}
+
+.inq-search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+}
 
 /* Inquiry Layout */
 /* Inquiry Module Styles */
@@ -2807,13 +2913,31 @@ h1, h2, h3, h4, h5, h6 {
   .inq-layout {
     grid-template-columns: 1fr;
     min-height: auto;
+    padding: 0;
+    gap: 0;
   }
   .inq-list-container {
     border-right: none;
-    padding-right: 0;
-    margin-bottom: 24px;
+    padding: 16px;
+    margin-bottom: 0;
+  }
+  .inq-list-container.hidden-mobile {
+    display: none;
+  }
+  .inq-detail-container {
+    display: none;
+    padding: 16px;
+  }
+  .inq-detail-container.show-mobile {
+    display: flex;
+    flex-direction: column;
+  }
+  .mobile-only {
+    display: inline-flex !important;
   }
 }
+
+.mobile-only { display: none; }
 .status-new { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
 .status-reviewed { background: rgba(234, 179, 8, 0.15); color: #eab308; }
 .status-replied { background: rgba(34, 197, 94, 0.15); color: #22c55e; }

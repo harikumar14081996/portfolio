@@ -107,8 +107,13 @@ export default function Hero({ theme }) {
             repeat={Infinity}
           />
         </div>
+        <div className="hero-philosophy-tag reveal-item mono">
+          RESULTS-FIRST ENGINEERING
+        </div>
         <p className="hero-desc">
-          I build powerful tools that feel simple to use. My passion is taking complex problems—whether in a hotel, a restaurant, or an AI lab—and turning them into software that is smart, fast, and helpful. I strive to make technology invisible, so you can focus on what matters most.
+          I build powerful tools that feel simple to use. My passion is taking complex problems—whether in a hotel, a restaurant, or an AI lab—and turning them into software that is smart, fast, and helpful. 
+          <br/>
+          <strong>Because ultimately, users care about results, not just code.</strong>
         </p>
         <div className="hero-buttons">
           <MagneticButton href="#projects" variant="primary">

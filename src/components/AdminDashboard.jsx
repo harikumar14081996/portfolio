@@ -1,5 +1,9 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import AdminLogin from './AdminLogin';
+import { 
+  Check, Trash2, Eye, EyeOff, Star, Mail, ArrowLeft, Search, 
+  ExternalLink, BarChart3, Users, MessageSquare, Share2, Settings, LogOut, Menu, X
+} from 'lucide-react';
 
 export default function AdminDashboard() {
   const [token, setToken] = useState(sessionStorage.getItem('analytics_token'));
@@ -26,6 +30,8 @@ export default function AdminDashboard() {
   const [inquiries, setInquiries] = useState([]);
   const [inqLoading, setInqLoading] = useState(false);
   const [inqCounts, setInqCounts] = useState({ new: 0, total: 0 });
+  const [inqSearch, setInqSearch] = useState('');
+  const [inqMobileFocus, setInqMobileFocus] = useState(false);
 
 
 
@@ -202,6 +208,21 @@ export default function AdminDashboard() {
     setMobileMenuOpen(false);
   };
 
+  const filteredInquiries = useMemo(() => {
+    return inquiries.filter(iq => 
+      iq.name.toLowerCase().includes(inqSearch.toLowerCase()) || 
+      iq.email.toLowerCase().includes(inqSearch.toLowerCase()) ||
+      iq.subject.toLowerCase().includes(inqSearch.toLowerCase())
+    );
+  }, [inquiries, inqSearch]);
+
+  const selectInquiry = (inq) => {
+    setSelectedVisit(inq);
+    if (window.innerWidth <= 768) {
+      setInqMobileFocus(true);
+    }
+  };
+
   if (!token) {
     return <AdminLogin onLogin={(t) => setToken(t)} />;
   }
@@ -234,21 +255,21 @@ export default function AdminDashboard() {
             className={`admin-sidebar-btn ${activeTab === 'analytics' ? 'active' : ''}`} 
             onClick={() => switchTab('analytics')}
           >
-            📈 <span>Analytics</span>
+            <BarChart3 size={18} /> <span>Analytics</span>
           </button>
 
           <button 
             className={`admin-sidebar-btn ${activeTab === 'reviews' ? 'active' : ''}`} 
             onClick={() => switchTab('reviews')}
           >
-            ⭐ <span>Reviews</span>
+            <Star size={18} /> <span>Reviews</span>
           </button>
 
           <button 
             className={`admin-sidebar-btn ${activeTab === 'inquiries' ? 'active' : ''}`} 
             onClick={() => switchTab('inquiries')}
           >
-            📮 <span>Inquiries</span>
+            <Mail size={18} /> <span>Inquiries</span>
             {inqCounts.new > 0 && <span className="tab-badge">{inqCounts.new}</span>}
           </button>
 
@@ -567,14 +588,24 @@ export default function AdminDashboard() {
       {activeTab === 'inquiries' && (
         <div className="admin-content" style={{ marginTop: '24px' }}>
           <div className="admin-glass-card inq-layout">
-            <div className="inq-list-container">
+            <div className={`inq-list-container ${inqMobileFocus ? 'hidden-mobile' : ''}`}>
               <h3 className="inq-header">ACTIVE LEADS {inqLoading && '⏳'}</h3>
+              <div className="inq-search-wrap">
+                <Search className="inq-search-icon" size={16} />
+                <input 
+                  type="text" 
+                  placeholder="Search leads..." 
+                  className="inq-search-input"
+                  value={inqSearch}
+                  onChange={(e) => setInqSearch(e.target.value)}
+                />
+              </div>
               <div className="inq-cards">
-                {inquiries.map((inq) => (
+                {filteredInquiries.map((inq) => (
                   <div 
                     key={inq.id} 
                     className={`inq-card ${inq.status} ${selectedVisit?.id === inq.id ? 'active' : ''}`}
-                    onClick={() => setSelectedVisit(inq)}
+                    onClick={() => selectInquiry(inq)}
                   >
                     <div className="inq-card-top">
                       <span className="inq-name">{inq.name}</span>
@@ -584,47 +615,58 @@ export default function AdminDashboard() {
                     <div className="inq-card-meta">{formatTime(inq.timestamp)}</div>
                   </div>
                 ))}
-                {inquiries.length === 0 && !inqLoading && (
-                  <div className="admin-muted" style={{ padding: '40px', textAlign: 'center' }}>No inquiries yet.</div>
+                {filteredInquiries.length === 0 && !inqLoading && (
+                  <div className="admin-muted" style={{ padding: '40px', textAlign: 'center' }}>No inquiries found.</div>
                 )}
               </div>
             </div>
 
-            <div className="inq-detail-container">
+            <div className={`inq-detail-container ${!inqMobileFocus && window.innerWidth <= 768 ? 'hidden-mobile' : ''} ${inqMobileFocus ? 'show-mobile' : ''}`}>
               {selectedVisit && selectedVisit.email ? (
                 <div className="inq-detail-card">
                   <div className="inq-detail-header">
-                    <h3>{selectedVisit.name}</h3>
-                    <p className="inq-detail-email">{selectedVisit.email}</p>
+                    <button className="mobile-only admin-circle-btn" style={{ marginBottom: '16px' }} onClick={() => setInqMobileFocus(false)}>
+                      <ArrowLeft size={18} />
+                    </button>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                      <div>
+                        <h3>{selectedVisit.name}</h3>
+                        <p className="inq-detail-email">{selectedVisit.email}</p>
+                      </div>
+                      <span className={`inq-badge ${selectedVisit.status}`}>{selectedVisit.status}</span>
+                    </div>
                   </div>
                   <div className="inq-detail-body">
-                    <strong>Message:</strong>
+                    <strong style={{ display: 'block', marginBottom: '8px', fontSize: '0.8rem', opacity: 0.6 }}>MESSAGE:</strong>
                     <p className="inq-detail-message">{selectedVisit.message}</p>
                   </div>
                   <div className="inq-detail-actions">
                     <button className="admin-btn inq-reply-btn" onClick={() => window.location.href = `mailto:${selectedVisit.email}?subject=Re: ${selectedVisit.subject}`}>
-                      📧 Reply via Email
+                      <Mail size={16} style={{ marginRight: '8px' }} /> Reply via Email
                     </button>
                     <div className="inq-status-btns">
                       <button 
-                        className="action-btn approve" 
+                        className="admin-circle-btn approve" 
                         onClick={() => updateInquiry(selectedVisit.id, 'replied')}
                         disabled={selectedVisit.status === 'replied'}
+                        title="Mark Replied"
                       >
-                         Mark Replied
+                         <Check size={18} />
                       </button>
                       <button 
-                        className="action-btn delete" 
+                        className="admin-circle-btn delete" 
                         onClick={() => updateInquiry(selectedVisit.id, 'closed')}
                         disabled={selectedVisit.status === 'closed'}
+                        title="Close Lead"
                       >
-                         Close Lead
+                         <X size={18} />
                       </button>
                     </div>
                   </div>
                 </div>
               ) : (
                 <div className="inq-empty-state">
+                  <Mail size={48} style={{ opacity: 0.1, marginBottom: '16px' }} />
                   <p>Select an inquiry to view details and respond.</p>
                 </div>
               )}
@@ -668,29 +710,30 @@ export default function AdminDashboard() {
                     <td>
                       <div className="admin-actions">
                         {r.status === 'pending' && (
-                          <button className="action-btn approve" onClick={() => updateReview(r.id, { status: 'approved' })} title="Approve">
-                            ✅
+                          <button className="admin-circle-btn approve" onClick={() => updateReview(r.id, { status: 'approved' })} title="Approve">
+                            <Check size={18} />
                           </button>
                         )}
                         {r.status === 'approved' && (
-                          <button className="action-btn hide" onClick={() => updateReview(r.id, { status: 'hidden' })} title="Hide">
-                            👁️
+                          <button className="admin-circle-btn" onClick={() => updateReview(r.id, { status: 'hidden' })} title="Hide from Public View">
+                            <EyeOff size={18} />
                           </button>
                         )}
                         {r.status === 'hidden' && (
-                          <button className="action-btn approve" onClick={() => updateReview(r.id, { status: 'approved' })} title="Unhide">
-                            🔓
+                          <button className="admin-circle-btn approve" onClick={() => updateReview(r.id, { status: 'approved' })} title="Unhide & Publish">
+                            <Eye size={18} />
                           </button>
                         )}
                         <button 
-                          className={`action-btn feature ${r.is_featured ? 'active' : ''}`} 
+                          className={`admin-circle-btn ${r.is_featured ? 'active' : ''}`} 
                           onClick={() => updateReview(r.id, { is_featured: !r.is_featured })}
-                          title={r.is_featured ? 'Unfeature' : 'Feature'}
+                          title={r.is_featured ? 'Remove from Featured' : 'Feature on Homepage'}
+                          style={r.is_featured ? { color: 'var(--accent-primary)', borderColor: 'var(--accent-primary)', background: 'var(--accent-glow)' } : {}}
                         >
-                          {r.is_featured ? '⭐' : '☆'}
+                          <Star size={18} fill={r.is_featured ? "var(--accent-primary)" : "none"} />
                         </button>
-                        <button className="action-btn delete" onClick={() => deleteReview(r.id)} style={{ color: '#ef4444' }} title="Delete">
-                          🗑️
+                        <button className="admin-circle-btn delete" onClick={() => deleteReview(r.id)} style={{ color: '#ef4444' }} title="Permanently Delete">
+                          <Trash2 size={18} />
                         </button>
                       </div>
                     </td>
