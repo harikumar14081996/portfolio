@@ -3173,16 +3173,7 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--accent-primary);
 }
 
-.admin-sidebar-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  flex: 1;
-}
-
-.admin-sidebar-btn {
-  display: flex;
-/* Removed legacy sidebar buttons v2 */
+/* Removed legacy sidebar selectors entirely to fix CssSyntaxError */
 
 .admin-main-content {
   flex: 1;
