@@ -1796,39 +1796,42 @@ h1, h2, h3, h4, h5, h6 {
 /* ─── Dashboard Layout ─── */
 .admin-saas-container {
   display: flex;
-  flex-direction: column; /* Stack Navbar and Content */
-  height: 100vh;
+  flex-direction: column;
+  min-height: 100vh;
   background: var(--bg-primary);
   font-family: 'Outfit', sans-serif;
   color: var(--text-primary);
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
+.admin-saas-sidebar {
+  display: none; /* FORCIBLY HIDE ON DESKTOP */
+}
 /* ─── ADMIN NAVBAR (Home Page Mirror) ─── */
 .admin-navbar {
   position: fixed;
-  top: 0;
+  top: 30px; /* Floating floating */
   left: 0;
   width: 100%;
   z-index: 2000;
-  padding: 15px 0;
-  transition: all 0.4s ease;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  justify-content: center;
 }
 
 .admin-navbar-inner {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1000px; /* Aligned with standard SaaS nav */
-  width: 92%; /* Breathing room for floating look */
-  margin: 0 auto;
+  width: 95%;
+  max-width: 1100px;
   padding: 10px 24px;
   background: var(--navbar-bg);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid var(--border);
   border-radius: 99px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
 }
 
 .admin-nav-links {
@@ -1928,38 +1931,26 @@ h1, h2, h3, h4, h5, h6 {
 .admin-hamburger.active span:nth-child(2) { opacity: 0; }
 .admin-hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-  .admin-saas-sidebar {
-    display: none; /* Hide drawer on desktop/tablet by default */
-  }
-
-  .admin-main-content {
-    padding: 100px 32px 40px; /* Clean spacing */
-  }
-}
-
-@media (max-width: 968px) {
-  .admin-saas-container {
-    flex-direction: column;
-    height: auto;
-    min-height: 100vh;
-  }
+/* Purged legacy sidebar styles entirely */
 
   .admin-mobile-bar { display: flex; }
   .desktop-only { display: none; }
 
   .admin-saas-sidebar {
-    display: flex; /* Show only when drawer is needed */
     position: fixed;
     top: 0;
-    right: -100%; 
+    right: -100%;
     left: auto;
     width: 280px;
     height: 100vh;
-    z-index: 3000; /* Above navbar */
-    transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 3000;
+    transition: right 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     background: var(--bg-secondary);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
     box-shadow: -20px 0 60px rgba(0,0,0,0.5);
-    padding: 80px 32px 40px; 
+    padding: 100px 32px 40px;
+    display: flex;
     flex-direction: column;
   }
 
@@ -1968,7 +1959,8 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .admin-saas-sidebar .admin-sidebar-btn {
-    font-size: 1.1rem; /* Matched portfolio mobile menu font size */
+    font-size: 1.1rem;
+    padding: 18px 20px;
   }
 
 /* Removed legacy mobile sidebar styles */
