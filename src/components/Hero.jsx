@@ -98,9 +98,9 @@ export default function Hero({ theme }) {
         <div className="hero-typed">
           <TypeAnimation
             sequence={[
-              'Designing the Future of Web', 2000,
-              'Engineering Intelligence within Every Device', 2000,
-              'Creating Software that just Works', 2000,
+              'Designing Software that just Works', 2000,
+              'Helping Businesses grow through Intelligence', 2000,
+              'Engineering the Future. Simply.', 2000,
             ]}
             wrapper="span"
             speed={50}
@@ -108,7 +108,7 @@ export default function Hero({ theme }) {
           />
         </div>
         <p className="hero-desc">
-          I believe in the intersection of technology and liberal arts. I build production grade software that feels as good as it looks. From vast cloud systems to intelligent local agents, I help visionary teams ship results that define their category.
+          I build powerful tools that feel simple to use. My passion is taking complex problems—whether in a hotel, a restaurant, or an AI lab—and turning them into software that is smart, fast, and helpful. I strive to make technology invisible, so you can focus on what matters most.
         </p>
         <div className="hero-buttons">
           <MagneticButton href="#projects" variant="primary">

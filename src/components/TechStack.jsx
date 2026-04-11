@@ -17,26 +17,26 @@ import {
 
 const techData = [
   // Row 1: 2 + 1
-  { icon: <DatabaseIcon />, name: 'Vertical Industry Mastery', desc: 'Tailored systems for Motels, Hotels, and Restaurants—built for the hospitality core.', span: true },
-  { icon: <FrontendIcon />, name: 'Institutional Stewardship', desc: 'Managing and evolving existing digital ecosystems with surgical precision.', span: false },
+  { icon: <DatabaseIcon />, name: 'Business Specific Solutions', desc: 'Custom software for Motels, Hotels, and Restaurants—built for the needs of your industry.', span: true },
+  { icon: <FrontendIcon />, name: 'System Modernization', desc: 'Taking your existing software and making it feel brand new with the latest technology.', span: false },
   
   // Row 2: 1 + 2
-  { icon: <DigitalPresenceIcon />, name: 'Digital Presence Hub', desc: 'Social media orchestration and brand continuity across all platforms.', span: false },
-  { icon: <AIIcon />, name: 'Agentic Sovereignty', desc: 'Multi-agent orchestration through LangGraph, AutoGen, and CrewAI loops.', span: true },
+  { icon: <DigitalPresenceIcon />, name: 'Brand & Digital Presence', desc: 'Managing your brand continuity and social media presence across the whole web.', span: false },
+  { icon: <AIIcon />, name: 'AI Assistants & Automation', desc: 'Building smart AI agents that work for you, handling complex tasks automatically.', span: true },
   
   // Row 3: 2 + 1
-  { icon: <IntegrationsIcon />, name: 'LLM Orchestration', desc: 'GPT-4o, Claude 3.5 Sonnet, and Gemini Pro tool-use and function calling patterns.', span: true },
-  { icon: <ResearchIcon />, name: 'Deep Research & Safety', desc: 'Model evaluation, AI safety benchmarking, and cognitive system performance.', span: false },
+  { icon: <IntegrationsIcon />, name: 'Smart Logic Integration', desc: 'Adding the power of GPT-4o, Claude, and Gemini into your business tools.', span: true },
+  { icon: <ResearchIcon />, name: 'AI Safety & Performance', desc: 'Testing and improving how AI behaves to ensure it is always safe and accurate.', span: false },
   
   // Row 4: 1 + 1 + 1
-  { icon: <MobileIcon />, name: 'Native Experience', desc: 'High performance SwiftUI and Kotlin applications for Apple and Android.', span: false },
-  { icon: <CloudIcon />, name: 'Cloud Majesty', desc: 'Azure and AWS enterprise grade deployments with CD/CI orchestration.', span: false },
-  { icon: <AutomationIcon />, name: 'The Autonomy Engine', desc: 'Streamlining business through n8n and OpenClaw autonomous workflows.', span: false },
+  { icon: <MobileIcon />, name: 'Mobile App Development', desc: 'Creating fast, beautiful apps for iPhone and Android devices.', span: false },
+  { icon: <CloudIcon />, name: 'Secure Cloud Servers', desc: 'Setting up high-performance, secure servers that can grow with your business.', span: false },
+  { icon: <AutomationIcon />, name: 'Business Automation', desc: 'Removing repetitive tasks from your day through automated digital workflows.', span: false },
   
   // Row 5: 1 + 1 + 1
-  { icon: <LogicIcon />, name: 'Engineering Integrity', desc: 'TypeScript, Unit Testing, and Type-safe logic for production systems.', span: false },
-  { icon: <BackendIcon />, name: 'Logic & Intelligence', desc: 'Managed APIs, Python model serving, and robust server logic.', span: false },
-  { icon: <BackendIcon />, name: 'System Scalability', desc: 'Microservices, Kubernetes, and high availability enterprise cores.', span: false },
+  { icon: <LogicIcon />, name: 'Reliable Programming', desc: 'High-quality, bug-free code using modern standards like TypeScript.', span: false },
+  { icon: <BackendIcon />, name: 'Intelligent Databases', desc: 'Building the "brain" of your app to store data safely and intelligently.', span: false },
+  { icon: <BackendIcon />, name: 'Large-Scale Software', desc: 'Designing software that can handle thousands of users without slowing down.', span: false },
 ];
 
 

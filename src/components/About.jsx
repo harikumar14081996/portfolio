@@ -24,15 +24,13 @@ export default function About() {
       <div className="about-content">
         <div>
           <p className="about-text reveal-item">
-            I do not just write code. I <span className="highlight">architect digital solutions that define the future</span>.
+            I believe that great software should feel <span className="highlight">completely invisible</span>. It should be there when you need it, and solve your problem before you even have to ask.
           </p>
           <p className="about-text reveal-item" style={{ marginTop: '16px' }}>
-            With <span className="highlight">over three years of professional experience</span> across enterprise web platforms,
-            mobile apps, cloud systems, and intelligence engines, I have shipped production code that scales globally.
-            I consistently achieve a <span className="highlight">ninety eight percent success rate</span> in every deployment I lead.
+            With <span className="highlight">over three years of experience</span> building tools for hotels, finance, and medical engineering, I have learned one major thing: **Users care about results, not just code.** I take pride in building systems that anyone can use—tools that feel natural, fast, and simple.
           </p>
           <p className="about-text reveal-item" style={{ marginTop: '16px' }}>
-            I lead teams and own entire product lifecycles across diverse industries. From hospitality and finance to education and surgical engineering, I deliver excellence that remains one hundred percent consistent.
+            I lead projects from the first sketch to the final deployment. Whether I am building an AI agent or a property management system, my goal is always the same: **Deliver excellence that remains one hundred percent consistent.**
           </p>
           <div className="about-location reveal-item">
             📍 Surrey, British Columbia, Canada &nbsp;·&nbsp; 📧 harikumarpatel14@gmail.com

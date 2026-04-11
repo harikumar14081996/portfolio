@@ -58,14 +58,14 @@ export default function ReviewPage() {
             exit="exit"
             className="keynote-slide"
           >
-            <span className="section-label">A Visionary Request</span>
-            <h1 className="keynote-title">Your voice defines <br/> the next category.</h1>
+            <span className="section-label">Tell Your Story</span>
+            <h1 className="keynote-title">Your feedback helps <br/> us grow.</h1>
             <p className="keynote-text">
-              "Quality is more important than quantity. One home run is much better than two doubles." <br/>
-              Be honest. Help us refine the standard of excellence.
+              "Great projects are built on honest feedback." <br/>
+              I value your experience above all else. Please tell me how our journey together has been so far.
             </p>
             <button className="keynote-btn" onClick={nextStep}>
-              ✦ Start Testimonial
+              ✦ Share My Feedback
             </button>
           </motion.div>
         )}
@@ -79,8 +79,8 @@ export default function ReviewPage() {
             exit="exit"
             className="keynote-slide"
           >
-            <span className="section-label">The First Measure</span>
-            <h2 className="keynote-subtitle">Rate the Integrity</h2>
+            <span className="section-label">Your Experience</span>
+            <h2 className="keynote-subtitle">How satisfied were you?</h2>
             <div className="big-rating-selector">
               {[1, 2, 3, 4, 5].map((star) => (
                 <motion.button
@@ -97,7 +97,7 @@ export default function ReviewPage() {
                 </motion.button>
               ))}
             </div>
-            <p className="rating-desc">{rating > 0 ? `${rating} / 5 Quality` : 'Select your standard'}</p>
+            <p className="rating-desc">{rating > 0 ? `${rating} / 5 Satisfaction` : 'Select your rating'}</p>
           </motion.div>
         )}
 
@@ -123,14 +123,14 @@ export default function ReviewPage() {
                 />
                 <input 
                   type="text" 
-                  placeholder="Business / Lead" 
+                  placeholder="Business / Category" 
                   className="keynote-input"
                   value={formData.business}
                   onChange={e => setFormData({...formData, business: e.target.value})}
                 />
               </div>
               <textarea 
-                placeholder="The truth about our journey..." 
+                placeholder="What was it like working together?" 
                 className="keynote-textarea"
                 rows={4}
                 value={formData.content}
@@ -140,7 +140,7 @@ export default function ReviewPage() {
               <div className="keynote-actions">
                 <button type="button" className="action-btn-back" onClick={prevStep}>← Back</button>
                 <button type="submit" className="keynote-btn" disabled={status === 'submitting'}>
-                  {status === 'submitting' ? 'Transmitting...' : 'Submit to Legacy ✦'}
+                  {status === 'submitting' ? 'Sending...' : 'Submit Feedback ✦'}
                 </button>
               </div>
               {error && <p className="form-error">⚠️ {error}</p>}
@@ -158,10 +158,10 @@ export default function ReviewPage() {
             className="keynote-slide"
           >
             <CheckCircle2 color="var(--accent-primary)" size={80} style={{ marginBottom: '24px' }} />
-            <span className="section-label">Testimonial Record</span>
-            <h1 className="keynote-title">One more thing...</h1>
+            <span className="section-label">Success</span>
+            <h1 className="keynote-title">Thank You!</h1>
             <p className="keynote-text">
-              Your story has been permanently recorded. We build products, but more importantly, we build relationships that define industries.
+              Your feedback is very important to me. I build software, but I value the people I build it for even more.
             </p>
             <MagneticButton href="/" variant="primary">✦ Return Home</MagneticButton>
           </motion.div>
