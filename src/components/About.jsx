@@ -30,7 +30,7 @@ export default function About() {
           <div className="philosophy-block reveal-item">
             <h3>Users care about <span className="highlight">results</span>, not just code.</h3>
             <p>
-              I take pride in crafting systems that <strong className="highlight">anyone</strong> can use—tools that feel natural, fast, and elegantly simple.
+              I take pride in crafting systems that <strong className="highlight">anyone</strong> can use, tools that feel natural, fast, and elegantly simple.
             </p>
           </div>
 
