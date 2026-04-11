@@ -1,24 +1,20 @@
-import { useState, useEffect } from 'react';
-import gsap from 'gsap';
-import { useGsapReveal } from '../hooks/useGsapReveal';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Star, ArrowRight, CheckCircle2, Home } from 'lucide-react';
 import MagneticButton from './MagneticButton';
 
 export default function ReviewPage() {
+  const [step, setStep] = useState(0); // 0: Intro, 1: Rating, 2: Details, 3: Success
   const [rating, setRating] = useState(0);
-  const [hoverRating, setHoverRating] = useState(0);
   const [formData, setFormData] = useState({ name: '', business: '', content: '' });
-  const [status, setStatus] = useState('idle'); // 'idle' | 'submitting' | 'success' | 'error'
+  const [status, setStatus] = useState('idle');
   const [error, setError] = useState('');
-  
-  const sectionRef = useGsapReveal();
+
+  const nextStep = () => setStep(step + 1);
+  const prevStep = () => setStep(step - 1);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (rating === 0) {
-      setError('Please select a rating to share your truth.');
-      return;
-    }
-    
     setStatus('submitting');
     try {
       const resp = await fetch('/api/reviews', {
@@ -33,8 +29,7 @@ export default function ReviewPage() {
       });
       
       if (resp.ok) {
-        setStatus('success');
-        gsap.from('.success-content', { opacity: 0, scale: 0.9, duration: 1, ease: 'expo.out' });
+        setStep(3);
       } else {
         setError('The connection failed. Let us try once more.');
         setStatus('error');
@@ -45,88 +40,133 @@ export default function ReviewPage() {
     }
   };
 
-  if (status === 'success') {
-    return (
-      <div className="review-page success-state success-content">
-        <div className="section-label">Legacy Secured</div>
-        <h1 className="hero-name">One more thing...</h1>
-        <p className="about-text" style={{ maxWidth: '600px', margin: '24px auto' }}>
-          Your story has been recorded. We do not just build products; we build relationships that last. 
-          Thank you for being part of the journey toward perfection.
-        </p>
-        <MagneticButton href="/" variant="primary">✦ Return home</MagneticButton>
-      </div>
-    );
-  }
+  const variants = {
+    enter: { opacity: 0, scale: 0.95, y: 20 },
+    center: { opacity: 1, scale: 1, y: 0 },
+    exit: { opacity: 0, scale: 1.05, y: -20 }
+  };
 
   return (
-    <div className="review-page" ref={sectionRef}>
-      <div className="review-container">
-        <div className="section-label reveal-item">The Voice of Quality</div>
-        <h1 className="section-title reveal-item">Your Story Matters</h1>
-        <p className="about-text reveal-item" style={{ marginBottom: '40px' }}>
-          "Design is a funny word. Some people think it means how it looks. But of course, if you dig deeper, 
-          it’s really <span className="highlight">how it works</span>." <br/><br/>
-          Tell us about your experience. Be honest. Be bold. Help us define the next standard of excellence.
-        </p>
+    <div className="review-page-v2">
+      <AnimatePresence mode="wait">
+        {step === 0 && (
+          <motion.div 
+            key="step0"
+            variants={variants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            className="keynote-slide"
+          >
+            <span className="section-label">A Visionary Request</span>
+            <h1 className="keynote-title">Your voice defines <br/> the next category.</h1>
+            <p className="keynote-text">
+              "Quality is more important than quantity. One home run is much better than two doubles." <br/>
+              Be honest. Help us refine the standard of excellence.
+            </p>
+            <button className="keynote-btn" onClick={nextStep}>
+              ✦ Start Testimonial
+            </button>
+          </motion.div>
+        )}
 
-        <form className="review-form reveal-item" onSubmit={handleSubmit}>
-          <div className="rating-selector">
-            {[1, 2, 3, 4, 5].map((star) => (
-              <button
-                key={star}
-                type="button"
-                className={`star-btn ${(hoverRating || rating) >= star ? 'active' : ''}`}
-                onMouseEnter={() => setHoverRating(star)}
-                onMouseLeave={() => setHoverRating(0)}
-                onClick={() => setRating(star)}
-              >
-                ✦
-              </button>
-            ))}
-            <span className="rating-label">{rating ? `${rating} / 5 Quality` : 'Select your rating'}</span>
-          </div>
-
-          <div className="form-grid">
-            <div className="input-group">
-              <label>Your Name</label>
-              <input 
-                type="text" 
-                placeholder="Who are you?" 
-                value={formData.name}
-                onChange={e => setFormData({...formData, name: e.target.value})}
-                required 
-              />
+        {step === 1 && (
+          <motion.div 
+            key="step1"
+            variants={variants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            className="keynote-slide"
+          >
+            <span className="section-label">The First Measure</span>
+            <h2 className="keynote-subtitle">Rate the Integrity</h2>
+            <div className="big-rating-selector">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <motion.button
+                  key={star}
+                  whileHover={{ scale: 1.2 }}
+                  whileTap={{ scale: 0.9 }}
+                  className={`big-star ${rating >= star ? 'active' : ''}`}
+                  onClick={() => {
+                    setRating(star);
+                    setTimeout(nextStep, 400);
+                  }}
+                >
+                  <Star fill={rating >= star ? "var(--accent-primary)" : "none"} size={64} />
+                </motion.button>
+              ))}
             </div>
-            <div className="input-group">
-              <label>Business / Institution</label>
-              <input 
-                type="text" 
-                placeholder="Where do you lead?" 
-                value={formData.business}
-                onChange={e => setFormData({...formData, business: e.target.value})}
+            <p className="rating-desc">{rating > 0 ? `${rating} / 5 Quality` : 'Select your standard'}</p>
+          </motion.div>
+        )}
+
+        {step === 2 && (
+          <motion.div 
+            key="step2"
+            variants={variants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            className="keynote-slide"
+          >
+            <span className="section-label">The Final Details</span>
+            <form className="keynote-form" onSubmit={handleSubmit}>
+              <div className="form-row">
+                <input 
+                  type="text" 
+                  placeholder="Your Name" 
+                  className="keynote-input"
+                  value={formData.name}
+                  onChange={e => setFormData({...formData, name: e.target.value})}
+                  required
+                />
+                <input 
+                  type="text" 
+                  placeholder="Business / Lead" 
+                  className="keynote-input"
+                  value={formData.business}
+                  onChange={e => setFormData({...formData, business: e.target.value})}
+                />
+              </div>
+              <textarea 
+                placeholder="The truth about our journey..." 
+                className="keynote-textarea"
+                rows={4}
+                value={formData.content}
+                onChange={e => setFormData({...formData, content: e.target.value})}
+                required
               />
-            </div>
-          </div>
+              <div className="keynote-actions">
+                <button type="button" className="action-btn-back" onClick={prevStep}>← Back</button>
+                <button type="submit" className="keynote-btn" disabled={status === 'submitting'}>
+                  {status === 'submitting' ? 'Transmitting...' : 'Submit to Legacy ✦'}
+                </button>
+              </div>
+              {error && <p className="form-error">⚠️ {error}</p>}
+            </form>
+          </motion.div>
+        )}
 
-          <div className="input-group" style={{ marginTop: '24px' }}>
-            <label>The Truth about our Collaboration</label>
-            <textarea 
-              placeholder="Tell the world how we changed the game..." 
-              rows={6}
-              value={formData.content}
-              onChange={e => setFormData({...formData, content: e.target.value})}
-              required
-            />
-          </div>
-
-          {error && <p className="form-error">⚠️ {error}</p>}
-
-          <button className="submit-review-btn" type="submit" disabled={status === 'submitting'}>
-            {status === 'submitting' ? 'Transmitting...' : 'Submit to Legacy'}
-          </button>
-        </form>
-      </div>
+        {step === 3 && (
+          <motion.div 
+            key="step3"
+            variants={variants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            className="keynote-slide"
+          >
+            <CheckCircle2 color="var(--accent-primary)" size={80} style={{ marginBottom: '24px' }} />
+            <span className="section-label">Testimonial Record</span>
+            <h1 className="keynote-title">One more thing...</h1>
+            <p className="keynote-text">
+              Your story has been permanently recorded. We build products, but more importantly, we build relationships that define industries.
+            </p>
+            <MagneticButton href="/" variant="primary">✦ Return Home</MagneticButton>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

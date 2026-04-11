@@ -14,6 +14,8 @@ import FloatingEmail from './components/FloatingEmail';
 import CookieConsent from './components/CookieConsent';
 import ReviewSection from './components/ReviewSection';
 import ReviewPage from './components/ReviewPage';
+import AdminDashboard from './components/AdminDashboard';
+import { useVisitorTracking } from './hooks/useVisitorTracking';
 
 export default function App() {
   const [theme, setTheme] = useState('dark');

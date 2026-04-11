@@ -93,6 +93,7 @@ export default function Hero({ theme }) {
         </div>
         <p className="hero-greeting mono">Hello, I am</p>
         <h1 className="hero-name">Harikumar Patel</h1>
+        <div className="hero-father-badge">S/O Harshadbhai Patel</div>
 
         <div className="hero-typed">
           <TypeAnimation
