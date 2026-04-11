@@ -1819,7 +1819,8 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1100px; /* SaaS optimized width */
+  max-width: 1000px; /* Aligned with standard SaaS nav */
+  width: 92%; /* Breathing room for floating look */
   margin: 0 auto;
   padding: 10px 24px;
   background: var(--navbar-bg);
@@ -1927,7 +1928,14 @@ h1, h2, h3, h4, h5, h6 {
 .admin-hamburger.active span:nth-child(2) { opacity: 0; }
 .admin-hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-.desktop-only { display: flex; }
+  .admin-saas-sidebar {
+    display: none; /* Hide drawer on desktop/tablet by default */
+  }
+
+  .admin-main-content {
+    padding: 100px 32px 40px; /* Clean spacing */
+  }
+}
 
 @media (max-width: 968px) {
   .admin-saas-container {
@@ -1940,19 +1948,23 @@ h1, h2, h3, h4, h5, h6 {
   .desktop-only { display: none; }
 
   .admin-saas-sidebar {
+    display: flex; /* Show only when drawer is needed */
     position: fixed;
     top: 0;
-    right: -100%; /* Moved to right side */
+    right: -100%; 
     left: auto;
     width: 280px;
     height: 100vh;
-    z-index: 2000;
+    z-index: 3000; /* Above navbar */
     transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     background: var(--bg-secondary);
     box-shadow: -20px 0 60px rgba(0,0,0,0.5);
-    padding: 80px 32px 40px; /* Matched portfolio padding */
-    display: flex;
+    padding: 80px 32px 40px; 
     flex-direction: column;
+  }
+
+  .admin-saas-sidebar.show {
+    right: 0;
   }
 
   .admin-saas-sidebar .admin-sidebar-btn {
@@ -3177,7 +3189,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .admin-main-content {
   flex: 1;
-  padding: 110px 40px 40px; /* Added spacing for floating top-nav */
+  padding: 100px 40px 40px; /* Standardized spacing */
   overflow-y: auto;
   width: 100%;
   background: var(--bg-primary);
