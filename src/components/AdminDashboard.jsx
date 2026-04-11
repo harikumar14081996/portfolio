@@ -242,9 +242,9 @@ export default function AdminDashboard() {
 
   return (
     <div className={`admin-saas-container ${mobileMenuOpen ? 'menu-open' : ''}`}>
-      {/* Mobile Bar */}
+      {/* Mobile Bar (Floating Glass) */}
       <div className="admin-mobile-bar">
-        <div className="admin-sidebar-logo" style={{ marginBottom: 0 }}>
+        <div className="navbar-logo" onClick={() => window.location.href = '/'}>
           <span className="logo-bracket">{'<'}</span>
           <span className="logo-text">HP</span>
           <span className="logo-bracket">{' />'}</span>

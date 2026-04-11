@@ -1885,15 +1885,26 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ─── Admin Mobile Optimizations ─── */
 .admin-mobile-bar {
-  display: none;
-  background: var(--bg-secondary);
-  border-bottom: 1px solid var(--border);
-  padding: 12px 20px;
+  display: none; /* Desktop hidden */
+  position: fixed;
+  top: 15px; /* Floating margin */
+  left: 15px;
+  right: 15px;
+  background: var(--navbar-bg); /* Matched portfolio glass */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: 99px; /* Pill shape */
+  padding: 8px 18px;
   justify-content: space-between;
   align-items: center;
-  position: sticky;
-  top: 0;
-  z-index: 1100;
+  z-index: 1800;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.admin-mobile-bar:hover {
+  border-color: var(--accent-primary);
 }
 
 .admin-hamburger {
