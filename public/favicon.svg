@@ -4,13 +4,14 @@
       .logo-text { 
         fill: #8b5cf6; 
         font-family: 'JetBrains Mono', 'Courier New', monospace; 
-        font-weight: 800; 
-        font-size: 26px; 
+        font-weight: 900; 
+        font-size: 34px;
+        letter-spacing: -2px;
       }
     </style>
   </defs>
   <!-- Transparent background -->
   <text x="50%" y="54%" text-anchor="middle" dominant-baseline="middle" class="logo-text">
-    &lt;HP /&gt;
+    &lt;HP/&gt;
   </text>
 </svg>
