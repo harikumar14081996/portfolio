@@ -28,11 +28,12 @@ export default function About() {
           </p>
           
           <div className="philosophy-block reveal-item">
-            <span className="philosophy-quote">“</span>
+            <span className="philosophy-quote quote-left">“</span>
             <h3>Users care about <span className="highlight">results</span>, not just code.</h3>
             <p>
-              I take pride in crafting systems that <strong className="highlight">anyone</strong> can use—tools that feel natural, fast, and elegantly simple.<span className="philosophy-quote">”</span>
+              I take pride in crafting systems that <strong className="highlight">anyone</strong> can use—tools that feel natural, fast, and elegantly simple.
             </p>
+            <span className="philosophy-quote quote-right">“</span>
           </div>
 
           <p className="about-text reveal-item" style={{ marginTop: '24px' }}>
