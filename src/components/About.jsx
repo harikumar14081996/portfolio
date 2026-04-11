@@ -37,7 +37,7 @@ export default function About() {
             With <span className="highlight">over three years of experience</span> building tools for hotels, finance, and medical engineering, I leading projects from the first sketch to the final deployment. 
           </p>
           <p className="about-text reveal-item" style={{ marginTop: '16px' }}>
-            I lead projects from the first sketch to the final deployment. Whether I am building an AI agent or a property management system, my goal is always the same: <strong>Deliver excellence that remains one hundred percent consistent.</strong>
+            I lead projects from the first sketch to the final deployment. Whether I am building an AI agent or a property management system, my goal is always the same: <strong className="highlight">Deliver excellence that remains one hundred percent consistent.</strong>
           </p>
           <div className="about-location reveal-item">
             📍 Surrey, British Columbia, Canada &nbsp;·&nbsp; 📧 harikumarpatel14@gmail.com
