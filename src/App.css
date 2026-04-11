@@ -1833,11 +1833,11 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   gap: 12px;
   padding: 14px 18px;
-  border-radius: 14px;
+  border-radius: 12px; /* Matched portfolio radius */
   border: none;
   background: transparent;
   color: var(--text-secondary);
-  font-size: 0.95rem;
+  font-size: 0.95rem; /* Restored 'perfact' desktop size */
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -1850,9 +1850,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .admin-sidebar-btn.active {
-  background: var(--accent-primary);
-  color: white;
-  box-shadow: 0 10px 20px var(--accent-glow);
+  background: var(--accent-glow); /* Matched portfolio active background */
+  color: var(--accent-primary);
+  box-shadow: none;
 }
 
 .admin-glass-card {
@@ -1933,20 +1933,26 @@ h1, h2, h3, h4, h5, h6 {
   .admin-saas-sidebar {
     position: fixed;
     top: 0;
-    left: -100%;
+    right: -100%; /* Moved to right side */
+    left: auto;
     width: 280px;
     height: 100vh;
     z-index: 2000;
-    transition: left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     background: var(--bg-secondary);
-    box-shadow: 20px 0 60px rgba(0,0,0,0.5);
-    padding: 20px 16px;
+    box-shadow: -20px 0 60px rgba(0,0,0,0.5);
+    padding: 80px 32px 40px; /* Matched portfolio padding */
     display: flex;
     flex-direction: column;
   }
 
+  .admin-saas-sidebar .admin-sidebar-btn {
+    font-size: 1.1rem; /* Matched portfolio mobile menu font size */
+  }
+
   .admin-saas-sidebar.show {
-    left: 0;
+    right: 0;
+    left: auto;
   }
 
   /* Mobile Backdrop */

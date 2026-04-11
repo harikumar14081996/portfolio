@@ -256,11 +256,15 @@ export default function AdminDashboard() {
 
       {/* Sidebar Navigation */}
       <aside className={`admin-saas-sidebar ${mobileMenuOpen ? 'show' : ''}`}>
-        <div className="admin-sidebar-logo desktop-only" style={{ cursor: 'pointer' }} onClick={() => window.location.href = '/'}>
+        <button className="mobile-only mobile-close" onClick={() => setMobileMenuOpen(false)} aria-label="Close menu">
+          ✕
+        </button>
+
+        <div className="admin-sidebar-logo" style={{ cursor: 'pointer' }} onClick={() => window.location.href = '/'}>
           <span className="logo-bracket">{'<'}</span>
           <span className="logo-text">HP</span>
           <span className="logo-bracket">{' />'}</span>
-          <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginLeft: '8px', fontWeight: '400' }}>ADMIN</span>
+          <span className="desktop-only" style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginLeft: '8px', fontWeight: '400' }}>ADMIN</span>
         </div>
 
         <nav className="admin-sidebar-nav">
