@@ -27,26 +27,47 @@ export default function App() {
   useVisitorTracking();
 
   useEffect(() => {
-    // Fetch social links
+    // 1. Initial Theme Detection
+    const saved = localStorage.getItem('portfolio-theme');
+    const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
+    
+    const applyTheme = (t) => {
+      setTheme(t);
+      document.documentElement.setAttribute('data-theme', t);
+    };
+
+    if (saved) {
+      applyTheme(saved);
+    } else {
+      applyTheme(systemDark.matches ? 'dark' : 'light');
+    }
+
+    // 2. System Theme Listener (only follows if no manual override in localStorage)
+    const handleSystemChange = (e) => {
+      if (!localStorage.getItem('portfolio-theme')) {
+        applyTheme(e.matches ? 'dark' : 'light');
+      }
+    };
+
+    systemDark.addEventListener('change', handleSystemChange);
+
+    // 3. App Level Initialization
     fetch('/api/config/social_links')
       .then(r => r.json())
       .then(data => setSocialLinks(data.links || []))
       .catch(() => {});
-
-    const saved = localStorage.getItem('portfolio-theme');
-    if (saved) {
-      setTheme(saved);
-      document.documentElement.setAttribute('data-theme', saved);
-    }
     
-    // Check if on admin or review route
     const checkRoute = () => {
       setIsAdmin(window.location.hash === '#/admin');
       setIsReviewPage(window.location.hash === '#/review');
     };
     checkRoute();
     window.addEventListener('hashchange', checkRoute);
-    return () => window.removeEventListener('hashchange', checkRoute);
+    
+    return () => {
+      window.removeEventListener('hashchange', checkRoute);
+      systemDark.removeEventListener('change', handleSystemChange);
+    };
   }, []);
 
   const toggleTheme = () => {
@@ -55,6 +76,7 @@ export default function App() {
     document.documentElement.setAttribute('data-theme', next);
     localStorage.setItem('portfolio-theme', next);
   };
+
 
   // Admin route
   if (isAdmin) {
