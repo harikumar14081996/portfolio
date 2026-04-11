@@ -242,77 +242,107 @@ export default function AdminDashboard() {
 
   return (
     <div className={`admin-saas-container ${mobileMenuOpen ? 'menu-open' : ''}`}>
-      {/* Mobile Bar (Floating Glass) */}
-      <div className="admin-mobile-bar">
-        <div className="navbar-logo" onClick={() => window.location.href = '/'}>
-          <span className="logo-bracket">{'<'}</span>
-          <span className="logo-text">HP</span>
-          <span className="logo-bracket">{' />'}</span>
-        </div>
-        <button className={`admin-hamburger ${mobileMenuOpen ? 'active' : ''}`} onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-          <span></span><span></span><span></span>
-        </button>
-      </div>
+      {/* Admin Navbar (Home Page Universal Mirror) */}
+      <nav className="admin-navbar">
+        <div className="admin-navbar-inner">
+          <div className="navbar-logo" onClick={() => window.location.href = '/'}>
+            <span className="logo-bracket">{'<'}</span>
+            <span className="logo-text">HP</span>
+            <span className="logo-bracket">{' />'}</span>
+          </div>
 
-      {/* Sidebar Navigation */}
+          {/* Desktop Links */}
+          <ul className="admin-nav-links desktop-only">
+            <li>
+              <button 
+                className={`admin-nav-link ${activeTab === 'analytics' ? 'active' : ''}`} 
+                onClick={() => switchTab('analytics')}
+              >
+                Analytics
+              </button>
+            </li>
+            <li>
+              <button 
+                className={`admin-nav-link ${activeTab === 'reviews' ? 'active' : ''}`} 
+                onClick={() => switchTab('reviews')}
+              >
+                Reviews
+              </button>
+            </li>
+            <li>
+              <button 
+                className={`admin-nav-link ${activeTab === 'inquiries' ? 'active' : ''}`} 
+                onClick={() => switchTab('inquiries')}
+              >
+                Inquiries
+                {inqCounts.new > 0 && <span className="tab-badge">{inqCounts.new}</span>}
+              </button>
+            </li>
+            <li>
+              <button 
+                className={`admin-nav-link ${activeTab === 'social' ? 'active' : ''}`} 
+                onClick={() => switchTab('social')}
+              >
+                Social
+              </button>
+            </li>
+            <li>
+              <button 
+                className={`admin-nav-link ${activeTab === 'settings' ? 'active' : ''}`} 
+                onClick={() => switchTab('settings')}
+              >
+                Settings
+              </button>
+            </li>
+            <li className="nav-divider" />
+            <li>
+              <button onClick={handleLogout} className="admin-nav-link" style={{ color: '#ef4444' }}>
+                Logout
+              </button>
+            </li>
+          </ul>
+
+          {/* Mobile Hamburger */}
+          <button 
+            className={`admin-hamburger mobile-only ${mobileMenuOpen ? 'active' : ''}`} 
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Menu"
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+        </div>
+      </nav>
+
+      {/* Mobile Mobile Drawer (Slides from Right) */}
       <aside className={`admin-saas-sidebar ${mobileMenuOpen ? 'show' : ''}`}>
         <button className="mobile-only mobile-close" onClick={() => setMobileMenuOpen(false)} aria-label="Close menu">
           ✕
         </button>
 
-        <div className="admin-sidebar-logo" style={{ cursor: 'pointer' }} onClick={() => window.location.href = '/'}>
-          <span className="logo-bracket">{'<'}</span>
-          <span className="logo-text">HP</span>
-          <span className="logo-bracket">{' />'}</span>
-          <span className="desktop-only" style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginLeft: '8px', fontWeight: '400' }}>ADMIN</span>
-        </div>
-
         <nav className="admin-sidebar-nav">
-          <button 
-            className={`admin-sidebar-btn ${activeTab === 'analytics' ? 'active' : ''}`} 
-            onClick={() => switchTab('analytics')}
-          >
+          <button className={`admin-sidebar-btn ${activeTab === 'analytics' ? 'active' : ''}`} onClick={() => switchTab('analytics')}>
             <BarChart3 size={18} /> <span>Analytics</span>
           </button>
-
-          <button 
-            className={`admin-sidebar-btn ${activeTab === 'reviews' ? 'active' : ''}`} 
-            onClick={() => switchTab('reviews')}
-          >
+          <button className={`admin-sidebar-btn ${activeTab === 'reviews' ? 'active' : ''}`} onClick={() => switchTab('reviews')}>
             <Star size={18} /> <span>Reviews</span>
           </button>
-
-          <button 
-            className={`admin-sidebar-btn ${activeTab === 'inquiries' ? 'active' : ''}`} 
-            onClick={() => switchTab('inquiries')}
-          >
+          <button className={`admin-sidebar-btn ${activeTab === 'inquiries' ? 'active' : ''}`} onClick={() => switchTab('inquiries')}>
             <Mail size={18} /> <span>Inquiries</span>
             {inqCounts.new > 0 && <span className="tab-badge">{inqCounts.new}</span>}
           </button>
-
-          <button 
-            className={`admin-sidebar-btn ${activeTab === 'social' ? 'active' : ''}`} 
-            onClick={() => switchTab('social')}
-          >
+          <button className={`admin-sidebar-btn ${activeTab === 'social' ? 'active' : ''}`} onClick={() => switchTab('social')}>
             <Share2 size={18} /> <span>Social</span>
           </button>
-
-          <button 
-            className={`admin-sidebar-btn ${activeTab === 'settings' ? 'active' : ''}`} 
-            onClick={() => switchTab('settings')}
-          >
+          <button className={`admin-sidebar-btn ${activeTab === 'settings' ? 'active' : ''}`} onClick={() => switchTab('settings')}>
             <Settings size={18} /> <span>Settings</span>
           </button>
-        </nav>
-
-        <div className="admin-sidebar-footer">
-          <a href="/" className="admin-sidebar-btn" style={{ textDecoration: 'none' }}>
-            <ArrowLeft size={18} /> <span>Back to Site</span>
-          </a>
+          <hr style={{ border: 'none', borderTop: '1px solid var(--border)', margin: '16px 0' }} />
           <button onClick={handleLogout} className="admin-sidebar-btn" style={{ color: '#ef4444' }}>
             <LogOut size={18} /> <span>Logout</span>
           </button>
-        </div>
+        </nav>
       </aside>
 
       {/* Main Content Area */}

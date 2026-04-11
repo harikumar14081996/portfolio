@@ -1796,20 +1796,82 @@ h1, h2, h3, h4, h5, h6 {
 /* ─── Dashboard Layout ─── */
 .admin-saas-container {
   display: flex;
+  flex-direction: column; /* Stack Navbar and Content */
   height: 100vh;
   background: var(--bg-primary);
   font-family: 'Outfit', sans-serif;
   color: var(--text-primary);
-  overflow: hidden; /* Prevent body scroll during dashboard use */
+  overflow: hidden;
 }
 
-.admin-saas-sidebar {
-  width: 280px;
-  background: var(--bg-secondary);
-  border-right: 1px solid var(--border);
+/* ─── ADMIN NAVBAR (Home Page Mirror) ─── */
+.admin-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2000;
+  padding: 15px 0;
+  transition: all 0.4s ease;
+}
+
+.admin-navbar-inner {
   display: flex;
-  flex-direction: column;
-  padding: 32px 16px;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1100px; /* SaaS optimized width */
+  margin: 0 auto;
+  padding: 10px 24px;
+  background: var(--navbar-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.admin-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+}
+
+.admin-nav-link {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  border: none;
+  background: transparent;
+}
+
+.admin-nav-link:hover {
+  color: var(--text-primary);
+  background: var(--accent-glow);
+}
+
+.admin-nav-link.active {
+  color: var(--accent-primary);
+  font-weight: 600;
+}
+
+.admin-nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+  box-shadow: 0 0 8px var(--accent-glow);
 }
 
 .admin-sidebar-logo {
@@ -1883,30 +1945,6 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: 1px;
 }
 
-/* ─── Admin Mobile Optimizations ─── */
-.admin-mobile-bar {
-  display: none; /* Desktop hidden */
-  position: fixed;
-  top: 15px; /* Floating margin */
-  left: 15px;
-  right: 15px;
-  background: var(--navbar-bg); /* Matched portfolio glass */
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--border);
-  border-radius: 99px; /* Pill shape */
-  padding: 8px 18px;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 1800;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.admin-mobile-bar:hover {
-  border-color: var(--accent-primary);
-}
-
 .admin-hamburger {
   background: none;
   border: none;
@@ -1914,7 +1952,8 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   flex-direction: column;
   gap: 5px;
-  width: 30px;
+  width: 28px;
+  padding: 4px;
 }
 
 .admin-hamburger span {
@@ -1922,7 +1961,7 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
   height: 2px;
   background: var(--text-primary);
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .admin-hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
@@ -1988,7 +2027,7 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .admin-main-content {
-    padding: 20px 12px;
+    padding: 100px 16px 40px; /* Matched portfolio padding */
     width: 100%;
     overflow-x: hidden;
   }
@@ -3243,8 +3282,9 @@ h1, h2, h3, h4, h5, h6 {
 
 .admin-main-content {
   flex: 1;
-  padding: 40px;
+  padding: 110px 40px 40px; /* Added spacing for floating top-nav */
   overflow-y: auto;
+  width: 100%;
   background: var(--bg-primary);
 }
 
