@@ -163,11 +163,13 @@ export default {
 
         // PATCH /api/reviews/:id — Update review (admin)
         const reviewMatch = path.match(/^\/api\/reviews\/(\d+)$/);
-        if (reviewMatch && request.method === 'PATCH') {
-          return await handleUpdateReview(reviewMatch[1], request, env);
+        if (reviewMatch) {
+          if (request.method === 'PATCH') return await handleUpdateReview(reviewMatch[1], request, env);
+          if (request.method === 'DELETE') return await handleDeleteReview(reviewMatch[1], env);
         }
 
         // PATCH /api/config/:key — Update config (admin)
+
         const configMatch = path.match(/^\/api\/config\/(.+)$/);
         if (configMatch && request.method === 'PATCH') {
           return await handleUpdateConfig(configMatch[1], request, env);
@@ -548,8 +550,18 @@ async function handleUpdateReview(id, request, env) {
 
   if (updates.length === 0) return json({ error: 'Nothing to update' }, 400);
 
+  params.push(id);
+  await env.DB.prepare(`UPDATE reviews SET ${updates.join(', ')} WHERE id = ?`)
+    .bind(...params).run();
+
   return json({ ok: true });
 }
+
+async function handleDeleteReview(id, env) {
+  await env.DB.prepare('DELETE FROM reviews WHERE id = ?').bind(id).run();
+  return json({ ok: true });
+}
+
 
 // ─── Config Handlers ───
 

@@ -94,6 +94,17 @@ export default function AdminDashboard() {
     } catch { /* silent */ }
   };
 
+  const deleteReview = async (id) => {
+    if (!window.confirm('Are you sure you want to permanently delete this review?')) return;
+    try {
+      const resp = await fetch(`/api/reviews/${id}`, {
+        method: 'DELETE',
+        headers,
+      });
+      if (resp.ok) fetchReviews();
+    } catch { /* silent */ }
+  };
+
   const createSampleReviews = async () => {
     const samples = [
       { name: "Julian V.", business: "Stellar Dynamics", rating: 5, content: "The level of engineering integrity here is something we haven't seen since the early days of X. Absolute perfection." },
@@ -553,6 +564,9 @@ export default function AdminDashboard() {
                         )}
                         <button className="action-btn feature" onClick={() => updateReview(r.id, { is_featured: !r.is_featured })}>
                           {r.is_featured ? 'Unfeature' : 'Feature'}
+                        </button>
+                        <button className="action-btn delete" onClick={() => deleteReview(r.id)} style={{ color: '#ef4444' }}>
+                          Delete
                         </button>
                       </div>
                     </td>
