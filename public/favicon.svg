@@ -1,17 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
-  <defs>
-    <style>
-      .logo-text { 
-        fill: #8b5cf6; 
-        font-family: 'JetBrains Mono', 'Courier New', monospace; 
-        font-weight: 900; 
-        font-size: 34px;
-        letter-spacing: -2px;
-      }
-    </style>
-  </defs>
-  <!-- Transparent background -->
-  <text x="50%" y="54%" text-anchor="middle" dominant-baseline="middle" class="logo-text">
-    &lt;HP/&gt;
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <rect width="100" height="100" rx="20" fill="#8b5cf6" />
+  <text x="50%" y="50%" text-anchor="middle" dominant-baseline="central" 
+        style="fill: #ffffff; font-family: 'Outfit', 'Inter', sans-serif; font-weight: 900; font-size: 55px; letter-spacing: -2px;">
+    HP
   </text>
 </svg>
