@@ -1,14 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
   <defs>
     <style>
-      .bracket { fill: #8b5cf6; font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 40px; }
-      .text { fill: #ffffff; font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 38px; }
+      .logo-text { fill: #8b5cf6; font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 38px; }
     </style>
   </defs>
-  <rect width="120" height="120" rx="24" fill="#0a0a14" />
-  <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle">
-    <tspan class="bracket">&lt;</tspan>
-    <tspan class="text">HP</tspan>
-    <tspan class="bracket">/&gt;</tspan>
+  <!-- Transparent background -->
+  <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" class="logo-text">
+    &lt;HP /&gt;
   </text>
 </svg>
