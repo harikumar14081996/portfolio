@@ -1874,48 +1874,7 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 0 8px var(--accent-glow);
 }
 
-.admin-sidebar-logo {
-  display: flex;
-  align-items: center;
-  padding: 0 12px;
-  margin-bottom: 48px;
-  font-weight: 800;
-  font-size: 1.2rem;
-}
-
-.admin-sidebar-nav {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 4px; /* Tighter gap for SaaS feel */
-}
-
-.admin-sidebar-btn {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 18px;
-  border-radius: 12px; /* Matched portfolio radius */
-  border: none;
-  background: transparent;
-  color: var(--text-secondary);
-  font-size: 0.95rem; /* Restored 'perfact' desktop size */
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-align: left;
-}
-
-.admin-sidebar-btn:hover {
-  background: var(--bg-tertiary);
-  color: var(--text-primary);
-}
-
-.admin-sidebar-btn.active {
-  background: var(--accent-glow); /* Matched portfolio active background */
-  color: var(--accent-primary);
-  box-shadow: none;
-}
+/* Removed legacy sidebar styles from 1806-1875 */
 
 .admin-glass-card {
   background: var(--bg-card);
@@ -2000,31 +1959,7 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 1.1rem; /* Matched portfolio mobile menu font size */
   }
 
-  .admin-saas-sidebar.show {
-    right: 0;
-    left: auto;
-  }
-
-  /* Mobile Backdrop */
-  .admin-saas-container::after {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0,0,0,0.6);
-    backdrop-filter: blur(4px);
-    z-index: 1950;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-  }
-
-  .admin-saas-container.menu-open::after {
-    opacity: 1;
-    pointer-events: auto;
-  }
+/* Removed legacy mobile sidebar styles */
 
   .admin-main-content {
     padding: 100px 16px 40px; /* Matched portfolio padding */
@@ -3247,38 +3182,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .admin-sidebar-btn {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  border: none;
-  background: transparent;
-  color: var(--text-muted);
-  border-radius: 12px;
-  cursor: pointer;
-  font-size: 0.95rem;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  text-align: left;
-}
-
-.admin-sidebar-btn:hover {
-  background: var(--bg-tertiary);
-  color: var(--text-primary);
-}
-
-.admin-sidebar-btn.active {
-  background: var(--accent-primary);
-  color: white;
-  box-shadow: 0 4px 15px var(--accent-glow);
-}
-
-.admin-sidebar-footer {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding-top: 20px;
-  border-top: 1px solid var(--border);
-}
+/* Removed legacy sidebar buttons v2 */
 
 .admin-main-content {
   flex: 1;
@@ -3324,42 +3228,7 @@ h1, h2, h3, h4, h5, h6 {
   transform: translateY(-4px);
 }
 
-@media (max-width: 1024px) {
-  .admin-saas-sidebar {
-    width: 80px;
-    padding: 32px 10px;
-  }
-  .admin-sidebar-btn span {
-    display: none;
-  }
-  .admin-sidebar-logo span {
-    display: none;
-  }
-}
-
-@media (max-width: 768px) {
-  .admin-saas-container {
-    flex-direction: column;
-  }
-  .admin-saas-sidebar {
-    width: 100%;
-    height: auto;
-    position: static;
-    flex-direction: row;
-    overflow-x: auto;
-    padding: 10px;
-    gap: 10px;
-  }
-  .admin-sidebar-logo, .admin-sidebar-footer {
-    display: none;
-  }
-  .admin-sidebar-nav {
-    flex-direction: row;
-  }
-  .admin-main-content {
-    padding: 20px;
-  }
-}
+/* Removed legacy sidebar media queries */
 /* ---------- ANIMATED ICONS ---------- */
 @keyframes spin-slow {
   from { transform: rotate(0deg); }
