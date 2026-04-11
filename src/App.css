@@ -2814,8 +2814,6 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 24px;
   }
 }
-  letter-spacing: 0.3px;
-}
 .status-new { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
 .status-reviewed { background: rgba(234, 179, 8, 0.15); color: #eab308; }
 .status-replied { background: rgba(34, 197, 94, 0.15); color: #22c55e; }
