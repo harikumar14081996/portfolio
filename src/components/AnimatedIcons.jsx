@@ -94,7 +94,8 @@ export const FrontendIcon = () => (
   <IconContainer>
     <motion.div
       animate={{ 
-        borderColor: ["var(--accent-primary)", "var(--text-muted)", "var(--accent-primary)"] 
+        opacity: [0.7, 1, 0.7],
+        scale: [1, 1.05, 1] 
       }}
       transition={{ duration: 3, repeat: Infinity }}
     >
@@ -107,7 +108,7 @@ export const BackendIcon = () => (
   <IconContainer>
     <motion.div
       animate={{ 
-        boxShadow: ["0 0 0px var(--accent-glow)", "0 0 15px var(--accent-glow)", "0 0 0px var(--accent-glow)"] 
+        filter: ["drop-shadow(0 0 0px var(--accent-glow))", "drop-shadow(0 0 8px var(--accent-glow))", "drop-shadow(0 0 0px var(--accent-glow))"]
       }}
       transition={{ duration: 2, repeat: Infinity }}
     >

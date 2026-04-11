@@ -25,6 +25,7 @@ export function useGsapReveal(options = {}) {
         delay,
         stagger: children.length > 0 ? stagger : 0,
         ease: 'power3.out',
+        force3D: true,
         scrollTrigger: {
           trigger: el,
           start: 'top 85%',

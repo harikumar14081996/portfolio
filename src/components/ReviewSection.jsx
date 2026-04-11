@@ -76,7 +76,9 @@ export default function ReviewSection() {
             ref={trackRef}
             drag="x"
             dragConstraints={constraints}
-            dragElastic={0.1}
+            dragElastic={0.2}
+            dragTransition={{ power: 0.3, timeConstant: 200 }}
+            whileTap={{ cursor: 'grabbing' }}
           >
             {reviews.map((rev) => (
               <motion.div 
