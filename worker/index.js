@@ -103,11 +103,6 @@ export default {
           return await handleAdminSetup(request, env);
         }
 
-        // GET or POST /api/admin/reset — Reset admin password to default (admin / Admin@123456)
-        if (path === '/api/admin/reset') {
-          return await handleAdminReset(request, env);
-        }
-
         // POST /api/inquiries — Submit inquiry (public)
         if (path === '/api/inquiries' && request.method === 'POST') {
           return await handleSubmitInquiry(request, env);
@@ -262,52 +257,6 @@ async function handleAdminSetup(request, env) {
     .bind(username, passwordHash).run();
 
   return json({ ok: true, message: `Admin "${username}" created successfully` });
-}
-
-async function handleAdminReset(request, env) {
-  let targetUser = 'admin';
-  let newPass = 'Admin@123456';
-
-  if (request.method === 'POST') {
-    const body = await request.json().catch(() => ({}));
-    if (body.username) targetUser = body.username;
-    if (body.password) newPass = body.password;
-  }
-
-  const passwordHash = await hashPassword(newPass);
-
-  // Ensure admins table exists
-  await env.DB.prepare(`
-    CREATE TABLE IF NOT EXISTS admins (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      username TEXT UNIQUE NOT NULL,
-      password_hash TEXT NOT NULL,
-      created_at TEXT DEFAULT (datetime('now'))
-    )
-  `).run().catch(() => {});
-
-  // Check if admin user exists
-  const existing = await env.DB.prepare('SELECT id FROM admins WHERE username = ?')
-    .bind(targetUser).first();
-
-  if (existing) {
-    await env.DB.prepare('UPDATE admins SET password_hash = ? WHERE username = ?')
-      .bind(passwordHash, targetUser).run();
-  } else {
-    await env.DB.prepare('INSERT INTO admins (username, password_hash) VALUES (?, ?)')
-      .bind(targetUser, passwordHash).run();
-  }
-
-  // Also update all existing admin accounts to this password so the user can log in with their prior username too
-  await env.DB.prepare('UPDATE admins SET password_hash = ?')
-    .bind(passwordHash).run();
-
-  return json({
-    ok: true,
-    message: `Admin credentials reset successfully. You can now log in with username "${targetUser}" and password "${newPass}".`,
-    username: targetUser,
-    default_password: newPass,
-  });
 }
 
 async function handleGetVisits(url, env) {
